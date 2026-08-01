@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --tertiary-container: #85675c;
+    --on-tertiary-fixed: #2b160f;
+    --secondary: #2a6b2c;
+    --on-background: #191c1b;
+    --surface: #f8faf8;
+    --surface-bright: #f8faf8;
+    --inverse-on-surface: #eff1ef;
+    --primary: #0d631b;
+    --error: #ba1a1a;
+    --on-tertiary-fixed-variant: #5b4137;
+    --background: #f8faf8;
+    --surface-container-lowest: #ffffff;
+    --on-tertiary: #ffffff;
+    --on-surface: #191c1b;
+    --secondary-fixed-dim: #91d78a;
+    --on-error: #ffffff;
+    --on-error-container: #93000a;
+    --surface-dim: #d8dad9;
+    --inverse-primary: #88d982;
+    --surface-tint: #1b6d24;
+    --on-primary: #ffffff;
+    --on-secondary-container: #307231;
+    --on-primary-fixed-variant: #005312;
+    --on-tertiary-container: #ffeee8;
+    --primary-container: #2e7d32;
+    --tertiary: #6b4f45;
+    --on-surface-variant: #40493d;
+    --surface-container-highest: #e1e3e1;
+    --surface-variant: #e1e3e1;
+    --surface-container: #eceeec;
+    --on-secondary: #ffffff;
+    --surface-container-high: #e6e9e7;
+    --error-container: #ffdad6;
+    --outline: #707a6c;
+    --primary-fixed: #a3f69c;
+    --surface-container-low: #f2f4f2;
+    --on-secondary-fixed-variant: #0c5216;
+    --secondary-container: #acf4a4;
+    --secondary-fixed: #acf4a4;
+    --on-primary-container: #cbffc2;
+    --primary-fixed-dim: #88d982;
+    --on-primary-fixed: #002204;
+    --outline-variant: #bfcaba;
+    --inverse-surface: #2e3130;
+    --tertiary-fixed: #ffdbce;
+    --on-secondary-fixed: #002203;
+    --tertiary-fixed-dim: #e4beb2;
+  }
+
+  .dark {
+    --background: #111413;
+    --on-background: #e1e3e1;
+    --surface: #111413;
+    --surface-container-lowest: #0c0f0e;
+    --surface-container-low: #191c1b;
+    --surface-container: #1d201f;
+    --surface-container-high: #282b2a;
+    --surface-container-highest: #333635;
+    --on-surface: #e1e3e1;
+    --on-surface-variant: #bfcaba;
+    --outline: #8a9385;
+    --outline-variant: #40493d;
+    --primary: #88d982;
+    --on-primary: #00390a;
+    --primary-container: #005312;
+    --on-primary-container: #a3f69c;
+    --secondary: #91d78a;
+    --on-secondary: #00390a;
+    --secondary-container: #0c5216;
+    --on-secondary-container: #acf4a4;
+    --tertiary: #e4beb2;
+    --on-tertiary: #3b221a;
+    --tertiary-container: #54382d;
+    --on-tertiary-container: #ffdbce;
+  }
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-primary-fixed: var(--primary-fixed);
+  --color-primary-fixed-dim: var(--primary-fixed-dim);
+  --color-on-primary-fixed: var(--on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
+  --color-inverse-primary: var(--inverse-primary);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary: var(--on-secondary);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-secondary-fixed: var(--secondary-fixed);
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
+
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+  --color-tertiary-fixed: var(--tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
+
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+  --color-surface-tint: var(--surface-tint);
+
+  --spacing-container-padding: 24px;
+  --spacing-widget-gap: 12px;
+  --spacing-gutter: 16px;
+  --spacing-base: 8px;
+  --spacing-sidebar-width: 320px;
+
+  --font-inter: var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+/* Custom CSS Classes */
+.glass-card {
+  background: rgba(248, 250, 248, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(225, 227, 225, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-card {
+  background: rgba(25, 28, 27, 0.82);
+  border: 1px solid rgba(64, 73, 61, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.hero-gradient {
+  background: linear-gradient(180deg, rgba(248,250,248,0.2) 0%, rgba(248,250,248,1) 100%);
+}
+
+.dark .hero-gradient {
+  background: linear-gradient(180deg, rgba(17,20,19,0.25) 0%, rgba(17,20,19,1) 100%);
+}
+
+/* Custom Typography Helpers matching Tailwind config */
+.font-display-lg {
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .font-display-lg {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.font-headline-lg {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.font-title-md {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.font-body-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.font-label-sm {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.font-data-numeral {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-weight: 600;
+}
+

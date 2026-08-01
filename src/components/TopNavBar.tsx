@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
 
 export default function TopNavBar() {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -58,13 +59,9 @@ export default function TopNavBar() {
         {/* Brand Logo & Title */}
         <a
           href="/"
-          className="flex items-center gap-3 cursor-pointer active:scale-95 transition-transform shrink-0"
+          className="flex items-center gap-2.5 cursor-pointer active:scale-95 transition-transform shrink-0"
         >
-          <img
-            alt="Green Algeria Logo"
-            className="h-8 w-8 object-contain"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Pk7z6E3m4R7npNw3nsE7ucnDi9c2hihjE7HVz6wmiQYfjJAw2ncxKQqqkyr9WFDzET46uvoVUOLckTl2nxNbQLUyvKF3R6b72RZ7pPAFRq7J0I1Con0J45c1dQYbOoJI1NbUc4_oAcvbAq7GaqJzjMFVI49P7MKCGbv7mKPmQmIV13Bqoc0E90hxazFeYlXwNEHkYfGX7PULK12BleaUj3SDWFiYDpq7tcH0uvIfH5ku5TFrI_4h"
-          />
+          <GreenAlgeriaLogo className="w-8 h-8 shrink-0" />
           <span className="font-extrabold text-base md:text-lg text-emerald-700 dark:text-emerald-400 tracking-tight">
             Green Algeria
           </span>

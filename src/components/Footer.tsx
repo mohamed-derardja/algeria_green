@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
 import { ArrowUp, Mail, Check, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
@@ -27,12 +28,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-outline-variant/30">
           {/* Column 1: Brand & Tagline */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <img
-                alt="Green Algeria Logo"
-                className="h-8 w-8 object-contain"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Pk7z6E3m4R7npNw3nsE7ucnDi9c2hihjE7HVz6wmiQYfjJAw2ncxKQqqkyr9WFDzET46uvoVUOLckTl2nxNbQLUyvKF3R6b72RZ7pPAFRq7J0I1Con0J45c1dQYbOoJI1NbUc4_oAcvbAq7GaqJzjMFVI49P7MKCGbv7mKPmQmIV13Bqoc0E90hxazFeYlXwNEHkYfGX7PULK12BleaUj3SDWFiYDpq7tcH0uvIfH5ku5TFrI_4h"
-              />
+            <div className="flex items-center gap-2.5">
+              <GreenAlgeriaLogo className="w-8 h-8 shrink-0" />
               <span className="font-title-md text-xl font-black text-primary dark:text-primary-fixed-dim tracking-tight">
                 Green Algeria
               </span>

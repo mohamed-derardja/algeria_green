@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TopNavBar from "@/components/TopNavBar";
 import Footer from "@/components/Footer";
+import GreenAlgeriaLogo from "@/components/GreenAlgeriaLogo";
 import { useLanguage } from "@/context/LanguageContext";
 import { Lock, Mail, User, ShieldCheck, ArrowRight, Bot, Trees, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 
@@ -50,11 +51,7 @@ export default function LoginPage() {
 
               <div>
                 <div className="flex items-center gap-3 mb-6">
-                  <img
-                    alt="Green Algeria Logo"
-                    className="h-9 w-9 object-contain"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Pk7z6E3m4R7npNw3nsE7ucnDi9c2hihjE7HVz6wmiQYfjJAw2ncxKQqqkyr9WFDzET46uvoVUOLckTl2nxNbQLUyvKF3R6b72RZ7pPAFRq7J0I1Con0J45c1dQYbOoJI1NbUc4_oAcvbAq7GaqJzjMFVI49P7MKCGbv7mKPmQmIV13Bqoc0E90hxazFeYlXwNEHkYfGX7PULK12BleaUj3SDWFiYDpq7tcH0uvIfH5ku5TFrI_4h"
-                  />
+                  <GreenAlgeriaLogo className="w-9 h-9 shrink-0" />
                   <span className="font-extrabold text-xl tracking-tight text-white">
                     Green Algeria
                   </span>

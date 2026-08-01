@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Award, X, Check, Download, QrCode, MapPin, Trees, Sparkles, Share2 } from "lucide-react";
+import { Award, X, Check, Download, QrCode, MapPin, Trees, Sparkles, Printer } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
@@ -24,7 +24,37 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
 
   const handleDownload = () => {
     setDownloaded(true);
+    // Create text metadata certificate download
+    const certText = `
+===========================================================
+REPUBLIC OF ALGERIA - NATIONAL ENVIRONMENTAL GIS AUTHORITY
+GREEN ALGERIA OFFICIAL ADOPTION CERTIFICATE
+===========================================================
+
+Certificate ID: DZ-CEDAR-05-8492
+Guardian Name: ${name}
+Species: ${species}
+Wilaya Sector: ${wilaya}
+GPS Coordinates: 35.5558° N, 6.1741° E
+Satellite Verification: Sentinel-2 Orbit Pass #842
+
+Verification URL: https://algeriagreen.dz/verify/DZ-CEDAR-05-8492
+Status: VERIFIED NATIONAL ECOLOGICAL HERITAGE SPECIMEN
+    `;
+    const blob = new Blob([certText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Algeria_Green_Certificate_${name.replace(/\s+/g, "_")}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
     setTimeout(() => setDownloaded(false), 3000);
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
@@ -63,7 +93,7 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-surface dark:bg-surface-container rounded-xl py-2.5 px-3 text-xs text-on-surface border border-outline-variant/60 outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full bg-surface dark:bg-surface-container rounded-xl py-2.5 px-3 text-xs text-on-surface border border-outline-variant/60 outline-none focus:ring-2 focus:ring-primary font-medium"
                   placeholder="e.g. Tarek Benali"
                 />
               </div>
@@ -104,7 +134,7 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
 
               <button
                 type="submit"
-                className="w-full py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-4"
+                className="w-full py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-4 font-bold"
               >
                 <Sparkles className="w-4 h-4" />
                 Generate National Adoption Certificate
@@ -114,25 +144,25 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
         ) : (
           <div className="space-y-6 animate-fadeIn">
             {/* Digital Certificate Preview Card */}
-            <div className="p-6 rounded-2xl border-4 border-double border-primary/50 bg-surface-container-lowest dark:bg-surface-container-high relative shadow-xl text-center space-y-4">
-              <div className="flex justify-between items-center text-xs font-mono text-primary font-bold border-b border-primary/20 pb-3">
+            <div className="p-6 rounded-2xl border-4 border-double border-emerald-600/60 bg-surface-container-lowest dark:bg-surface-container-high relative shadow-2xl text-center space-y-4">
+              <div className="flex justify-between items-center text-xs font-mono text-emerald-700 dark:text-emerald-400 font-bold border-b border-emerald-500/20 pb-3">
                 <span>REPUBLIC OF ALGERIA</span>
-                <span>GIS VERIFICATION ID: DZ-CEDAR-05-8492</span>
+                <span>ID: DZ-CEDAR-05-8492</span>
               </div>
 
-              <div className="w-12 h-12 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center">
-                <Trees className="w-6 h-6" />
+              <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/30">
+                <Trees className="w-7 h-7" />
               </div>
 
               <div>
                 <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold block mb-1">
                   OFFICIAL CERTIFICATE OF TREE ADOPTION
                 </span>
-                <h4 className="font-display-lg text-2xl font-bold text-primary font-serif">
+                <h4 className="font-display-lg text-2xl font-bold text-emerald-800 dark:text-emerald-300 font-serif">
                   {name}
                 </h4>
                 <p className="text-xs text-on-surface-variant mt-1">
-                  Is hereby recognized as the official Guardian of 1 mature specimen of:
+                  Is recognized as the official National Guardian of 1 mature specimen:
                 </p>
                 <p className="text-sm font-bold text-on-surface font-mono mt-1">
                   {species}
@@ -146,12 +176,15 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
                 </div>
                 <div>
                   <span className="text-[10px] text-on-surface-variant block uppercase font-label-sm">GPS Coordinates</span>
-                  <span className="font-bold text-primary">35.5558° N, 6.1741° E</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">35.5558° N, 6.1741° E</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-primary/20 text-[11px] font-mono text-on-surface-variant">
-                <span>Orbit Pass: Sentinel-2 Grid 31S</span>
+              <div className="flex items-center justify-between pt-3 border-t border-emerald-500/20 text-[11px] font-mono text-on-surface-variant">
+                <div className="flex items-center gap-2">
+                  <QrCode className="w-8 h-8 text-slate-800 dark:text-zinc-200" />
+                  <span className="text-[10px] text-left">Scan to Verify<br/>algeriagreen.dz</span>
+                </div>
                 <div className="flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400">
                   <Check className="w-3.5 h-3.5" /> Satellite Verified
                 </div>
@@ -162,10 +195,17 @@ export default function TreeAdoptionModal({ isOpen, onClose }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={handleDownload}
-                className="flex-1 py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer font-bold"
               >
                 <Download className="w-4 h-4" />
-                {downloaded ? "Certificate Saved to Device! ✓" : "Download Official Certificate (PNG)"}
+                {downloaded ? "Certificate File Saved! ✓" : "Download Official Certificate"}
+              </button>
+
+              <button
+                onClick={handlePrint}
+                className="px-4 py-3 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-xl font-title-md text-xs transition-colors cursor-pointer flex items-center gap-1.5 font-bold border border-outline-variant/30"
+              >
+                <Printer className="w-4 h-4" /> Print
               </button>
 
               <button

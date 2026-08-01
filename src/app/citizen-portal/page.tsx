@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TopNavBar from "@/components/TopNavBar";
 import Footer from "@/components/Footer";
+import GeoJSONExporter from "@/components/GeoJSONExporter";
 import {
   Trees,
   Award,
@@ -354,9 +355,12 @@ export default function CitizenPortalPage() {
                 </div>
               </div>
 
-              <button className="w-full py-2.5 text-xs text-primary font-semibold border border-primary/30 rounded-xl hover:bg-primary/5 transition-colors cursor-pointer">
+              <button className="w-full py-2.5 text-xs text-primary font-semibold border border-primary/30 rounded-xl hover:bg-primary/5 transition-colors cursor-pointer mb-4">
                 View Full National Rankings
               </button>
+
+              {/* GeoJSON & KML Data Exporter */}
+              <GeoJSONExporter />
             </div>
 
             {/* Quick Actions / Nearby Missions */}

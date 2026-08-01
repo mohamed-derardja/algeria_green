@@ -285,6 +285,9 @@ export default function TopNavBar() {
                   <a href="/gis-console" className="block p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer font-semibold">
                     GIS Console & Analytics
                   </a>
+                  <a href="/login" className="block p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950 text-emerald-700 dark:text-emerald-400 cursor-pointer font-bold border-t border-slate-200 dark:border-zinc-800 mt-1 pt-2">
+                    Sign In / Register Account →
+                  </a>
                 </div>
               </div>
             )}

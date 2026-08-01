@@ -1,0 +1,75 @@
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const wilayasData = [
+    {
+      code: "05",
+      name: "Batna",
+      nameAr: "باتنة",
+      ecoRegion: "Aurès Massif",
+      forestCoverPct: 24.2,
+      loggedTrees: 1450000,
+      ndviScore: 0.78,
+      primarySpecies: "Cedrus atlantica (Atlas Cedar)",
+      coordinates: { lat: 35.5558, lng: 6.1741 },
+      status: "Protected Forest Reserve",
+    },
+    {
+      code: "15",
+      name: "Tizi Ouzou",
+      nameAr: "تيزي وزو",
+      ecoRegion: "Kabylie Coastal Mountains",
+      forestCoverPct: 38.6,
+      loggedTrees: 2100000,
+      ndviScore: 0.86,
+      primarySpecies: "Quercus suber (Cork Oak)",
+      coordinates: { lat: 36.7118, lng: 4.0459 },
+      status: "High Canopy Density",
+    },
+    {
+      code: "17",
+      name: "Djelfa",
+      nameAr: "الجلفة",
+      ecoRegion: "High Plateaus Barrage Vert",
+      forestCoverPct: 11.4,
+      loggedTrees: 1800000,
+      ndviScore: 0.54,
+      primarySpecies: "Pinus halepensis (Aleppo Pine)",
+      coordinates: { lat: 34.6728, lng: 3.263 },
+      status: "Active Reforestation Belt",
+    },
+    {
+      code: "06",
+      name: "Béjaïa",
+      nameAr: "بجاية",
+      ecoRegion: "Gouraya & Kabylie",
+      forestCoverPct: 35.1,
+      loggedTrees: 1950000,
+      ndviScore: 0.82,
+      primarySpecies: "Quercus suber (Cork Oak)",
+      coordinates: { lat: 36.7558, lng: 5.0843 },
+      status: "National Park Reserve",
+    },
+    {
+      code: "07",
+      name: "Biskra",
+      nameAr: "بسكرة",
+      ecoRegion: "Ziban Oasis Belt",
+      forestCoverPct: 4.8,
+      loggedTrees: 850000,
+      ndviScore: 0.42,
+      primarySpecies: "Phoenix dactylifera (Date Palm)",
+      coordinates: { lat: 34.8503, lng: 5.7281 },
+      status: "Oasis Protection Zone",
+    },
+  ];
+
+  return NextResponse.json({
+    status: "success",
+    version: "v4.2",
+    authority: "Republic of Algeria National Environmental GIS Authority",
+    dataset: "Algeria Forest Cover & Telemetry",
+    totalWilayas: 58,
+    data: wilayasData,
+  });
+}

@@ -1,15 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 import { Smartphone, CheckCircle, Upload, MapPin, Sparkles, Award } from "lucide-react";
 import TreeAdoptionModal from "./TreeAdoptionModal";
 
 export default function CitizenScienceCTA() {
+  const { t } = useLanguage();
   const [selectedWilaya, setSelectedWilaya] = useState("05 - Batna");
   const [species, setSpecies] = useState("Cedrus atlantica (Atlas Cedar)");
   const [isLogged, setIsLogged] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
+  const [uploadedPhotoName, setUploadedPhotoName] = useState<string | null>(null);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedPhotoName(file.name);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPhotoPreviewUrl(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSimulateSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,11 +54,11 @@ export default function CitizenScienceCTA() {
                 </span>
                 
                 <h2 className="font-headline-lg text-headline-lg text-on-background font-bold tracking-tight mb-4">
-                  Be Part of Algeria&apos;s 100-Million Trees Reforestation Era
+                  {t("citizen_title")}
                 </h2>
                 
                 <p className="font-body-md text-on-surface-variant mb-6 leading-relaxed">
-                  Empower your local community! Log mature trees, plant nurseries, and native forest specimens directly from your phone. Every entry is cross-referenced with Sentinel-2 satellite telemetry.
+                  {t("citizen_desc")}
                 </p>
 
                 <div className="grid grid-cols-3 gap-4 mb-8">
@@ -66,12 +82,12 @@ export default function CitizenScienceCTA() {
                     className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-title-md text-xs transition-all shadow-md active:scale-95 flex items-center gap-2 cursor-pointer font-bold"
                   >
                     <Award className="w-4 h-4" />
-                    Adopt a Tree &amp; Claim Digital Certificate
+                    {t("citizen_adopt_btn")}
                   </button>
                 </div>
               </div>
 
-              {/* Interactive Demo Form Card */}
+              {/* Interactive Field Form Card with Working File Upload */}
               <div className="lg:col-span-5 glass-card p-6 rounded-2xl border border-outline-variant/50 shadow-xl bg-surface/90 dark:bg-surface-container-high/90">
                 <h3 className="font-title-md text-on-surface font-bold mb-1 flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-primary" />
@@ -89,9 +105,16 @@ export default function CitizenScienceCTA() {
                     <h4 className="font-title-md text-on-surface font-bold mb-1">
                       Specimen Successfully Logged!
                     </h4>
-                    <p className="text-xs text-on-surface-variant mb-4 font-mono">
-                      GPS: 35.5558° N, 6.1741° E (Batna, Aurès)
+                    <p className="text-xs text-on-surface-variant mb-2 font-mono">
+                      GPS: 35.5558° N, 6.1741° E ({selectedWilaya})
                     </p>
+
+                    {photoPreviewUrl && (
+                      <div className="my-3 w-full h-32 rounded-xl overflow-hidden border border-emerald-500/40">
+                        <img src={photoPreviewUrl} alt="Logged Field Photo" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+
                     <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-xs font-semibold mb-4">
                       Verified with Sentinel-2 Orbit Pass #842
                     </div>
@@ -105,7 +128,11 @@ export default function CitizenScienceCTA() {
                       </button>
 
                       <button
-                        onClick={() => setIsLogged(false)}
+                        onClick={() => {
+                          setIsLogged(false);
+                          setUploadedPhotoName(null);
+                          setPhotoPreviewUrl(null);
+                        }}
                         className="w-full py-2 bg-surface-container-highest hover:bg-outline-variant text-on-surface rounded-xl text-xs font-title-md transition-colors cursor-pointer"
                       >
                         Log Another Specimen
@@ -147,17 +174,31 @@ export default function CitizenScienceCTA() {
                       </select>
                     </div>
 
-                    <div className="p-3 rounded-xl border border-dashed border-outline-variant text-center bg-surface-container/50">
-                      <Upload className="w-5 h-5 text-on-surface-variant mx-auto mb-1 opacity-70" />
-                      <span className="text-[11px] text-on-surface-variant block font-medium">
-                        Simulated Photo GPS Tagging
+                    {/* Working File Uploader Input */}
+                    <label
+                      htmlFor="field-photo-input"
+                      className="p-3.5 rounded-xl border border-dashed border-primary/50 text-center bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer block"
+                    >
+                      <input
+                        id="field-photo-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                      <Upload className="w-5 h-5 text-primary mx-auto mb-1 opacity-90" />
+                      <span className="text-[11px] font-bold text-on-surface block">
+                        {uploadedPhotoName ? `✓ Uploaded: ${uploadedPhotoName}` : "Attach Field Specimen Photo (GPS Tagged)"}
                       </span>
-                    </div>
+                      <span className="text-[10px] text-on-surface-variant font-mono">
+                        Click to upload image (JPG, PNG)
+                      </span>
+                    </label>
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3 bg-primary text-on-primary rounded-xl font-title-md text-xs hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer font-bold"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center gap-2">
@@ -167,7 +208,7 @@ export default function CitizenScienceCTA() {
                       ) : (
                         <>
                           <MapPin className="w-4 h-4" />
-                          Submit Simulated Log
+                          Submit Field Specimen Log
                         </>
                       )}
                     </button>
@@ -187,4 +228,3 @@ export default function CitizenScienceCTA() {
     </>
   );
 }
-

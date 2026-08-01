@@ -51,7 +51,10 @@ export default function TopNavBar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-white dark:bg-black border-b border-slate-200 dark:border-zinc-800 shadow-xs flex justify-between items-center px-4 md:px-8 h-16 w-full transition-colors">
+      <nav
+        className="fixed top-0 w-full z-50 border-b border-slate-200 dark:border-zinc-800 shadow-sm flex justify-between items-center px-4 md:px-8 h-16 w-full transition-colors duration-200"
+        style={{ backgroundColor: isDarkMode ? "#000000" : "#ffffff" }}
+      >
         {/* Brand Logo & Title */}
         <a
           href="/"
@@ -69,11 +72,11 @@ export default function TopNavBar() {
 
         {/* Center Search Input & Navigation Links */}
         <div className="hidden lg:flex flex-1 items-center justify-center gap-6 px-4">
-          {/* Pure Search Input */}
+          {/* Search Input */}
           <div className="relative w-56">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 pointer-events-none" />
             <input
-              className="w-full bg-white dark:bg-zinc-900 rounded-full py-1.5 pl-9 pr-3 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all placeholder:text-slate-400 font-medium shadow-2xs"
+              className="w-full bg-slate-50 dark:bg-zinc-900 rounded-full py-1.5 pl-9 pr-3 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all placeholder:text-slate-400 font-medium shadow-2xs"
               placeholder={language === "AR" ? "ابحث عن ولاية..." : language === "FR" ? "Rechercher une Wilaya..." : "Search Wilaya (e.g. Batna)..."}
               type="text"
               value={searchQuery}
@@ -89,7 +92,7 @@ export default function TopNavBar() {
             )}
           </div>
 
-          {/* Pure Navigation Tabs */}
+          {/* Navigation Tabs */}
           <ul className="flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -100,7 +103,7 @@ export default function TopNavBar() {
                     className={`font-semibold text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer inline-block ${
                       isActive
                         ? "bg-emerald-700 text-white shadow-xs font-bold"
-                        : "text-slate-700 dark:text-zinc-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-zinc-900"
+                        : "text-slate-700 dark:text-zinc-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-zinc-900"
                     }`}
                   >
                     {item.label}
@@ -299,12 +302,15 @@ export default function TopNavBar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white dark:bg-black lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-zinc-800 animate-fadeIn">
+        <div
+          className="fixed inset-0 top-16 z-40 lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-zinc-800 animate-fadeIn"
+          style={{ backgroundColor: isDarkMode ? "#000000" : "#ffffff" }}
+        >
           <div className="space-y-4">
             <div className="relative w-full mb-6">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
-                className="w-full bg-white dark:bg-zinc-900 rounded-xl py-2.5 pl-9 pr-4 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 outline-none"
+                className="w-full bg-slate-50 dark:bg-zinc-900 rounded-xl py-2.5 pl-9 pr-4 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 outline-none"
                 placeholder="Search Wilaya (e.g. Batna)..."
                 type="text"
                 value={searchQuery}
@@ -318,7 +324,7 @@ export default function TopNavBar() {
                   <a
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block py-2.5 px-4 rounded-xl font-bold text-sm text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-900 hover:text-emerald-700 transition-colors"
+                    className="block py-2.5 px-4 rounded-xl font-bold text-sm text-slate-800 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-900 hover:text-emerald-700 transition-colors"
                   >
                     {item.label}
                   </a>
@@ -328,7 +334,7 @@ export default function TopNavBar() {
           </div>
 
           <div className="pt-6 border-t border-slate-200 dark:border-zinc-800 space-y-3">
-            <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2 rounded-xl border border-slate-300 dark:border-zinc-800">
+            <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900 p-2 rounded-xl border border-slate-300 dark:border-zinc-800">
               <span className="text-xs font-bold text-slate-800 dark:text-zinc-200">Language</span>
               <div className="flex gap-1">
                 <button

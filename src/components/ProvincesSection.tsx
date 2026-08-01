@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 import { Search, Trees, Filter, MapPin, X, ExternalLink, ChevronRight, Activity } from "lucide-react";
 
 interface ProvinceData {
@@ -17,6 +18,7 @@ interface ProvinceData {
 }
 
 export default function ProvincesSection() {
+  const { t } = useLanguage();
   const [selectedRegion, setSelectedRegion] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedProvince, setSelectedProvince] = useState<ProvinceData | null>(null);

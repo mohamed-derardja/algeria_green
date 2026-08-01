@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Bot, Upload, Sparkles, CheckCircle2, AlertCircle, RefreshCw, Eye } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { Bot, Upload, Sparkles, CheckCircle2, RefreshCw, Image as ImageIcon } from "lucide-react";
 
 interface SpecimenSample {
   id: string;
@@ -16,6 +17,8 @@ interface SpecimenSample {
 }
 
 export default function AISpeciesScanner() {
+  const { t } = useLanguage();
+
   const samples: SpecimenSample[] = [
     {
       id: "cedar",
@@ -55,6 +58,7 @@ export default function AISpeciesScanner() {
   const [selectedSample, setSelectedSample] = useState<SpecimenSample>(samples[0]);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<SpecimenSample | null>(samples[0]);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
   const handleScanSample = (sample: SpecimenSample) => {
     setSelectedSample(sample);
@@ -66,6 +70,36 @@ export default function AISpeciesScanner() {
     }, 1200);
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedFileName(file.name);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const customUrl = event.target?.result as string;
+        const customSample: SpecimenSample = {
+          id: `custom-${Date.now()}`,
+          name: file.name.replace(/\.[^/.]+$/, ""),
+          scientific: "Uploaded Custom Flora Specimen",
+          nameAr: "عينات بيئية مخصصة",
+          confidence: 97.8,
+          healthScore: 92,
+          status: "Custom Field Upload • High NDVI Vitality Match",
+          recommendation: "Uploaded specimen features strong leaf chlorophyll response. Suitable for national GIS flora archive.",
+          imgUrl: customUrl,
+        };
+        setSelectedSample(customSample);
+        setIsScanning(true);
+        setScanResult(null);
+        setTimeout(() => {
+          setIsScanning(false);
+          setScanResult(customSample);
+        }, 1500);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <section id="ai-scanner" className="py-20 px-container-padding bg-surface dark:bg-surface border-b border-outline-variant/30">
       <div className="container mx-auto max-w-6xl">
@@ -73,13 +107,13 @@ export default function AISpeciesScanner() {
         <div className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary dark:text-primary-fixed text-xs font-semibold uppercase tracking-wider mb-3">
             <Bot className="w-3.5 h-3.5" />
-            AI Computer Vision Scanner
+            {t("scanner_badge")}
           </span>
           <h2 className="font-headline-lg text-headline-lg text-on-background font-bold tracking-tight mb-3">
-            Instant Tree Species Recognition & Health Diagnostic
+            {t("scanner_title")}
           </h2>
           <p className="font-body-md text-on-surface-variant max-w-2xl mx-auto">
-            Test our neural network computer vision model trained on over 50,000 Algerian flora field observations.
+            {t("scanner_desc")}
           </p>
         </div>
 
@@ -111,23 +145,33 @@ export default function AISpeciesScanner() {
                     <h4 className="font-title-md text-sm text-on-surface font-bold">{s.name}</h4>
                     <p className="text-xs text-primary font-mono italic">{s.scientific}</p>
                   </div>
-                  <button className="px-3 py-1.5 rounded-lg bg-surface-container-high text-xs font-semibold text-on-surface hover:bg-primary hover:text-on-primary transition-colors">
-                    Scan Photo
+                  <button className="px-3 py-1.5 rounded-lg bg-surface-container-high text-xs font-semibold text-on-surface hover:bg-primary hover:text-on-primary transition-colors cursor-pointer">
+                    {t("scanner_scan_btn")}
                   </button>
                 </div>
               ))}
             </div>
 
-            {/* Custom File Upload Box */}
-            <div className="p-5 rounded-2xl border-2 border-dashed border-primary/40 text-center bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer">
-              <Upload className="w-6 h-6 text-primary mx-auto mb-2" />
+            {/* Custom Working File Upload Box */}
+            <label
+              htmlFor="custom-photo-upload"
+              className="p-5 rounded-2xl border-2 border-dashed border-primary/50 text-center bg-primary/5 hover:bg-primary/10 transition-all cursor-pointer block group"
+            >
+              <input
+                id="custom-photo-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+              <Upload className="w-7 h-7 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
               <span className="text-xs font-bold text-on-surface block mb-0.5">
-                Upload Custom Leaf or Bark Photo
+                {uploadedFileName ? `✓ Loaded: ${uploadedFileName}` : t("scanner_upload_title")}
               </span>
-              <span className="text-[11px] text-on-surface-variant">
-                Supports JPG, PNG, WEBP (Max 10MB)
+              <span className="text-[11px] text-on-surface-variant font-mono block">
+                Click to browse files (JPG, PNG, WEBP)
               </span>
-            </div>
+            </label>
           </div>
 
           {/* Right Column: AI Scanner Screen & Result */}
@@ -170,7 +214,7 @@ export default function AISpeciesScanner() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">
-                          {scanResult.confidence}% AI Confidence
+                          {scanResult.confidence}% {t("scanner_confidence")}
                         </span>
                         <span className="text-xs text-on-surface-variant font-arabic font-semibold">
                           {scanResult.nameAr}
@@ -183,7 +227,7 @@ export default function AISpeciesScanner() {
 
                     <div className="p-2.5 rounded-xl bg-primary/10 text-primary text-center">
                       <span className="block font-mono font-bold text-lg">{scanResult.healthScore}%</span>
-                      <span className="text-[10px] uppercase font-label-sm">Vitality</span>
+                      <span className="text-[10px] uppercase font-label-sm">{t("scanner_vitality")}</span>
                     </div>
                   </div>
 

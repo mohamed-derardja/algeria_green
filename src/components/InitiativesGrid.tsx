@@ -1,50 +1,49 @@
 "use client";
 
+import { useLanguage } from "@/context/LanguageContext";
 import { Trees, Shield, Cpu, Users, ArrowUpRight } from "lucide-react";
 
 export default function InitiativesGrid() {
+  const { t } = useLanguage();
+
   const initiatives = [
     {
       id: "barrage-vert",
-      title: "Barrage Vert 2.0",
+      title: t("init_1_title"),
       subtitle: "The Great Green Wall of Algeria",
       icon: Trees,
-      color: "emerald",
       badge: "3M+ Hectares",
-      description: "Revitalizing the historic 1,500km anti-desertification green belt stretching across the High Plateaus to halt Saharan dune migration.",
+      description: t("init_1_desc"),
       metric: "Target 2030: +4.7M Trees Planted",
       link: "#timeline-section",
     },
     {
       id: "aures-massif",
-      title: "Aurès Cedar & Forest Protection",
+      title: t("init_2_title"),
       subtitle: "Batna & Djurdjura Conservation",
       icon: Shield,
-      color: "teal",
       badge: "Batna & Kabylie Hub",
-      description: "Specialized monitoring and pest disease early-warning for endemic Cedrus atlantica and Cork Oak ecosystems in Eastern massifs.",
+      description: t("init_2_desc"),
       metric: "24.2% Regional Forest Cover",
       link: "#platform",
     },
     {
       id: "sat-ai",
-      title: "Sentinel AI Telemetry",
+      title: t("init_3_title"),
       subtitle: "Multispectral Canopy Analytics",
       icon: Cpu,
-      color: "indigo",
       badge: "10m Resolution",
-      description: "Automated neural network classification combining Sentinel-2 & Landsat optical layers to calculate NDVI index and tree density in real time.",
+      description: t("init_3_desc"),
       metric: "Automated 14-Day Orbit Pass",
       link: "#interactive-map",
     },
     {
       id: "citizen-science",
-      title: "Citizen Science Network",
+      title: t("init_4_title"),
       subtitle: "Community Field Logging",
       icon: Users,
-      color: "amber",
       badge: "58 Wilayas Active",
-      description: "Mobilizing local youth, forest rangers, and researchers to log individual tree GPS coordinates, photos, and health status via our mobile app.",
+      description: t("init_4_desc"),
       metric: "5,000+ Field Contributors",
       link: "#citizen-portal",
     },
@@ -55,13 +54,13 @@ export default function InitiativesGrid() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <span className="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-sm text-xs uppercase tracking-wider mb-2 font-semibold">
-            Strategic Environmental Pillars
+            {t("init_title")}
           </span>
           <h2 className="font-headline-lg text-headline-lg text-on-background font-bold tracking-tight mb-4">
-            National Green Initiatives & Technology Infrastructure
+            {t("init_title")}
           </h2>
           <p className="font-body-md text-on-surface-variant max-w-2xl mx-auto">
-            Combining satellite AI telemetry with ground community action to protect Algeria&apos;s rich ecological legacy.
+            {t("init_subtitle")}
           </p>
         </div>
 

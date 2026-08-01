@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,9 +47,8 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-background min-h-screen font-body-md antialiased overflow-x-hidden transition-colors duration-200">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );
 }
-

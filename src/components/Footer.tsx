@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUp, Trees, Mail, Check, ShieldCheck, ExternalLink } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { ArrowUp, Mail, Check, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -37,7 +39,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs text-on-surface-variant leading-relaxed max-w-sm">
-              National Geospatial Vegetation &amp; Environmental Monitoring Platform. Combining multispectral Sentinel-2 satellite telemetry with community citizen science across all 58 Wilayas.
+              {t("footer_desc")}
             </p>
 
             <div className="flex items-center gap-2 text-xs text-primary dark:text-primary-fixed font-mono font-semibold pt-1">
@@ -54,22 +56,22 @@ export default function Footer() {
             <ul className="space-y-2 text-on-surface-variant font-medium">
               <li>
                 <a href="/" className="hover:text-primary transition-colors flex items-center gap-1">
-                  Home Portal
+                  {t("nav_home")}
                 </a>
               </li>
               <li>
                 <a href="/gis-console" className="hover:text-primary transition-colors flex items-center gap-1">
-                  GIS Console & Data
+                  {t("nav_gis")}
                 </a>
               </li>
               <li>
                 <a href="/citizen-portal" className="hover:text-primary transition-colors flex items-center gap-1">
-                  Volunteer & Citizen Hub
+                  {t("nav_portal")}
                 </a>
               </li>
               <li>
                 <a href="/#timeline-section" className="hover:text-primary transition-colors flex items-center gap-1">
-                  Barrage Vert 2.0 Roadmap
+                  {t("nav_roadmap")}
                 </a>
               </li>
             </ul>
@@ -116,7 +118,7 @@ export default function Footer() {
         {/* Bottom Copyright & Back to Top */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-on-surface-variant">
           <p className="text-center sm:text-left">
-            © {new Date().getFullYear()} National Environmental GIS Authority — Green Algeria Initiative. All rights reserved.
+            © {new Date().getFullYear()} {t("footer_rights")}
           </p>
 
           <button

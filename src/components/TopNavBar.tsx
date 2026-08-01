@@ -2,19 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, Sparkles } from "lucide-react";
+import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function TopNavBar() {
   const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // Multilingual State
-  const [language, setLanguage] = useState<"EN" | "AR" | "FR">("EN");
   const [showLangMenu, setShowLangMenu] = useState(false);
 
   useEffect(() => {
@@ -52,8 +51,8 @@ export default function TopNavBar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm flex justify-between items-center px-4 md:px-8 h-16 w-full transition-colors">
-        {/* Brand Logo & High-Contrast Title */}
+      <nav className="fixed top-0 w-full z-50 bg-white dark:bg-black border-b border-slate-200 dark:border-zinc-800 shadow-xs flex justify-between items-center px-4 md:px-8 h-16 w-full transition-colors">
+        {/* Brand Logo & Title */}
         <a
           href="/"
           className="flex items-center gap-3 cursor-pointer active:scale-95 transition-transform shrink-0"
@@ -63,24 +62,18 @@ export default function TopNavBar() {
             className="h-8 w-8 object-contain"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Pk7z6E3m4R7npNw3nsE7ucnDi9c2hihjE7HVz6wmiQYfjJAw2ncxKQqqkyr9WFDzET46uvoVUOLckTl2nxNbQLUyvKF3R6b72RZ7pPAFRq7J0I1Con0J45c1dQYbOoJI1NbUc4_oAcvbAq7GaqJzjMFVI49P7MKCGbv7mKPmQmIV13Bqoc0E90hxazFeYlXwNEHkYfGX7PULK12BleaUj3SDWFiYDpq7tcH0uvIfH5ku5TFrI_4h"
           />
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-base md:text-lg text-emerald-800 dark:text-emerald-400 tracking-tight">
-              Green Algeria
-            </span>
-            <span className="text-[11px] font-mono font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-              v2.4 GIS
-            </span>
-          </div>
+          <span className="font-extrabold text-base md:text-lg text-emerald-700 dark:text-emerald-400 tracking-tight">
+            Green Algeria
+          </span>
         </a>
 
-        {/* Center Navigation Tabs & High-Contrast Search Bar */}
+        {/* Center Search Input & Navigation Links */}
         <div className="hidden lg:flex flex-1 items-center justify-center gap-6 px-4">
-          {/* Search Input */}
+          {/* Pure Search Input */}
           <div className="relative w-56">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 pointer-events-none" />
             <input
-              className="w-full bg-slate-100 dark:bg-slate-800 rounded-full py-1.5 pl-9 pr-3 text-xs text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-600 outline-none transition-all placeholder:text-slate-500 font-medium"
+              className="w-full bg-white dark:bg-zinc-900 rounded-full py-1.5 pl-9 pr-3 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all placeholder:text-slate-400 font-medium shadow-2xs"
               placeholder={language === "AR" ? "ابحث عن ولاية..." : language === "FR" ? "Rechercher une Wilaya..." : "Search Wilaya (e.g. Batna)..."}
               type="text"
               value={searchQuery}
@@ -96,7 +89,7 @@ export default function TopNavBar() {
             )}
           </div>
 
-          {/* Navigation Links */}
+          {/* Pure Navigation Tabs */}
           <ul className="flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -104,10 +97,10 @@ export default function TopNavBar() {
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className={`font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer inline-block ${
+                    className={`font-semibold text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer inline-block ${
                       isActive
-                        ? "bg-emerald-700 text-white shadow-sm font-bold"
-                        : "text-slate-700 dark:text-slate-200 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-800"
+                        ? "bg-emerald-700 text-white shadow-xs font-bold"
+                        : "text-slate-700 dark:text-zinc-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-zinc-900"
                     }`}
                   >
                     {item.label}
@@ -118,7 +111,7 @@ export default function TopNavBar() {
           </ul>
         </div>
 
-        {/* Right Actions: Language, Log Tree CTA, Theme, Alerts, User */}
+        {/* Right Actions */}
         <div className="flex items-center gap-2 shrink-0">
           {/* Language Switcher */}
           <div className="relative">
@@ -130,19 +123,19 @@ export default function TopNavBar() {
                 setShowUserMenu(false);
               }}
               title="Change Language"
-              className="px-2.5 py-1.5 rounded-full text-xs font-mono font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-600 transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+              className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:border-emerald-600 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+              <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>{language === "AR" ? "🇩🇿 AR" : language === "FR" ? "🇫🇷 FR" : "🇬🇧 EN"}</span>
-              <ChevronDown className="w-3 h-3 text-slate-500" />
+              <ChevronDown className="w-3 h-3 text-slate-400" />
             </button>
 
             {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-1.5 z-50 text-left animate-fadeIn">
+              <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-slate-200 dark:border-zinc-800 p-1.5 z-50 text-left animate-fadeIn">
                 <button
                   onClick={() => { setLanguage("EN"); setShowLangMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between cursor-pointer ${
-                    language === "EN" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer ${
+                    language === "EN" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800"
                   }`}
                 >
                   <span>🇬🇧 English</span>
@@ -150,8 +143,8 @@ export default function TopNavBar() {
                 </button>
                 <button
                   onClick={() => { setLanguage("AR"); setShowLangMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between cursor-pointer ${
-                    language === "AR" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer ${
+                    language === "AR" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800"
                   }`}
                 >
                   <span>🇩🇿 العربية</span>
@@ -159,8 +152,8 @@ export default function TopNavBar() {
                 </button>
                 <button
                   onClick={() => { setLanguage("FR"); setShowLangMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between cursor-pointer ${
-                    language === "FR" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer ${
+                    language === "FR" ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold" : "text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800"
                   }`}
                 >
                   <span>🇫🇷 Français</span>
@@ -170,10 +163,10 @@ export default function TopNavBar() {
             )}
           </div>
 
-          {/* Quick CTA Button: Log Tree */}
+          {/* Emerald Log Tree CTA */}
           <a
             href="/citizen-portal"
-            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs transition-all shadow-md active:scale-95 cursor-pointer"
+            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs transition-all shadow-xs active:scale-95 cursor-pointer"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             {language === "AR" ? "غرس شجرة" : language === "FR" ? "Planter Arbre" : "Log Tree"}
@@ -183,7 +176,7 @@ export default function TopNavBar() {
           <button
             onClick={toggleDarkMode}
             title="Toggle Light/Dark Theme"
-            className="p-2 rounded-full text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer active:scale-95 flex items-center justify-center"
+            className="p-2 rounded-full text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-all cursor-pointer active:scale-95 flex items-center justify-center shadow-2xs"
           >
             {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
@@ -197,29 +190,29 @@ export default function TopNavBar() {
                 setShowUserMenu(false);
               }}
               title="Notifications"
-              className="p-2 rounded-full text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer active:scale-95 flex items-center justify-center relative"
+              className="p-2 rounded-full text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-all cursor-pointer active:scale-95 flex items-center justify-center relative shadow-2xs"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full ring-2 ring-white dark:ring-black"></span>
             </button>
 
             {/* Notifications Popover */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-4 z-50 text-left animate-fadeIn">
-                <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700 mb-3">
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100">Recent GIS Alerts</h4>
+              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 p-4 z-50 text-left animate-fadeIn">
+                <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-800 mb-3">
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Recent GIS Alerts</h4>
                   <span className="text-[11px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2 py-0.5 rounded-full font-mono font-bold">
                     3 New
                   </span>
                 </div>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors">
-                    <p className="font-bold text-emerald-800 dark:text-emerald-300">Aurès Cedar Pass (Batna)</p>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">50,000 Cedar trees added to satellite registry.</p>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors">
+                    <p className="font-bold text-emerald-800 dark:text-emerald-400">Aurès Cedar Pass (Batna)</p>
+                    <p className="text-[11px] text-slate-600 dark:text-zinc-300 mt-0.5">50,000 Cedar trees added to satellite registry.</p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors">
-                    <p className="font-bold text-emerald-800 dark:text-emerald-300">Barrage Vert Telemetry</p>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">High Plateaus re-afforestation dataset published.</p>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors">
+                    <p className="font-bold text-emerald-800 dark:text-emerald-400">Barrage Vert Telemetry</p>
+                    <p className="text-[11px] text-slate-600 dark:text-zinc-300 mt-0.5">High Plateaus re-afforestation dataset published.</p>
                   </div>
                 </div>
               </div>
@@ -235,16 +228,16 @@ export default function TopNavBar() {
                 setShowUserMenu(false);
               }}
               title="Help & FAQ"
-              className="p-2 rounded-full text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer active:scale-95 flex items-center justify-center"
+              className="p-2 rounded-full text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-all cursor-pointer active:scale-95 flex items-center justify-center shadow-2xs"
             >
               <HelpCircle className="w-4 h-4" />
             </button>
 
             {/* Help Popover */}
             {showHelp && (
-              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-4 z-50 text-left animate-fadeIn">
-                <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">GIS Platform Help</h4>
-                <p className="text-xs text-slate-600 dark:text-slate-300 mb-3">
+              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 p-4 z-50 text-left animate-fadeIn">
+                <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-1">GIS Platform Help</h4>
+                <p className="text-xs text-slate-600 dark:text-zinc-300 mb-3">
                   Learn how to use satellite analytics and community tree logging tools.
                 </p>
                 <a
@@ -277,16 +270,16 @@ export default function TopNavBar() {
 
             {/* User Dropdown */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-3 z-50 text-left animate-fadeIn">
-                <div className="pb-2 border-b border-slate-200 dark:border-slate-700 mb-2">
-                  <p className="font-bold text-xs text-slate-900 dark:text-slate-100">Dr. Yassine Benali</p>
+              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 p-3 z-50 text-left animate-fadeIn">
+                <div className="pb-2 border-b border-slate-200 dark:border-zinc-800 mb-2">
+                  <p className="font-bold text-xs text-slate-900 dark:text-white">Dr. Yassine Benali</p>
                   <p className="text-[11px] text-slate-500 font-mono">Senior GIS Researcher</p>
                 </div>
-                <div className="space-y-1 text-xs text-slate-800 dark:text-slate-200">
-                  <a href="/citizen-portal" className="block p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer font-semibold">
+                <div className="space-y-1 text-xs text-slate-800 dark:text-zinc-200">
+                  <a href="/citizen-portal" className="block p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer font-semibold">
                     My Submissions & Badges
                   </a>
-                  <a href="/gis-console" className="block p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer font-semibold">
+                  <a href="/gis-console" className="block p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer font-semibold">
                     GIS Console & Analytics
                   </a>
                 </div>
@@ -297,7 +290,7 @@ export default function TopNavBar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl lg:hidden text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-200 cursor-pointer ml-1"
+            className="p-2 rounded-xl lg:hidden text-slate-800 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:bg-slate-100 cursor-pointer ml-1"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -306,12 +299,12 @@ export default function TopNavBar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-slate-800 animate-fadeIn">
+        <div className="fixed inset-0 top-16 z-40 bg-white dark:bg-black lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-zinc-800 animate-fadeIn">
           <div className="space-y-4">
             <div className="relative w-full mb-6">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
-                className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-xs text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 outline-none"
+                className="w-full bg-white dark:bg-zinc-900 rounded-xl py-2.5 pl-9 pr-4 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 outline-none"
                 placeholder="Search Wilaya (e.g. Batna)..."
                 type="text"
                 value={searchQuery}
@@ -325,7 +318,7 @@ export default function TopNavBar() {
                   <a
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block py-2.5 px-4 rounded-xl font-bold text-sm text-slate-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-700 transition-colors"
+                    className="block py-2.5 px-4 rounded-xl font-bold text-sm text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-900 hover:text-emerald-700 transition-colors"
                   >
                     {item.label}
                   </a>
@@ -334,25 +327,25 @@ export default function TopNavBar() {
             </ul>
           </div>
 
-          <div className="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700">
-              <span className="text-xs font-bold text-slate-800 dark:text-slate-200">Language</span>
+          <div className="pt-6 border-t border-slate-200 dark:border-zinc-800 space-y-3">
+            <div className="flex justify-between items-center bg-white dark:bg-zinc-900 p-2 rounded-xl border border-slate-300 dark:border-zinc-800">
+              <span className="text-xs font-bold text-slate-800 dark:text-zinc-200">Language</span>
               <div className="flex gap-1">
                 <button
                   onClick={() => setLanguage("EN")}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "EN" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-slate-300"}`}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "EN" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-zinc-300"}`}
                 >
                   🇬🇧 EN
                 </button>
                 <button
                   onClick={() => setLanguage("AR")}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "AR" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-slate-300"}`}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "AR" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-zinc-300"}`}
                 >
                   🇩🇿 AR
                 </button>
                 <button
                   onClick={() => setLanguage("FR")}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "FR" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-slate-300"}`}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${language === "FR" ? "bg-emerald-700 text-white" : "text-slate-700 dark:text-zinc-300"}`}
                 >
                   🇫🇷 FR
                 </button>

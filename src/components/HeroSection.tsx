@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 import StatsGrid from "./StatsGrid";
-import { ArrowRight, Map, PlusCircle, Activity } from "lucide-react";
+import { ArrowRight, Map, PlusCircle } from "lucide-react";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
   const handleScrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -33,37 +35,34 @@ export default function HeroSection() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          <span>Algeria National Environmental GIS Portal</span>
-          <span className="text-[10px] text-on-surface-variant font-mono opacity-80 border-l border-primary/30 pl-2">
-            Sentinel-2 Active
-          </span>
+          <span>{t("hero_badge")}</span>
         </div>
 
         <h1 className="font-display-lg text-display-lg text-on-background mb-6 drop-shadow-sm leading-tight font-bold">
-          National Vegetation &amp; Tree Mapping Platform
+          {t("hero_title_1")} <span className="text-primary block sm:inline font-black">{t("hero_title_2")}</span>
         </h1>
 
         <p className="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant/90 max-w-2xl mb-8 leading-relaxed">
-          Empowering policymakers, researchers, and citizens with real-time multispectral geospatial data to monitor and expand Algeria&apos;s green infrastructure across all 58 Wilayas.
+          {t("hero_desc")}
         </p>
 
         {/* Dual Actions */}
         <div className="flex flex-col sm:flex-row gap-4 mb-12 w-full justify-center max-w-md">
           <button
             onClick={() => handleScrollTo("interactive-map")}
-            className="bg-primary text-on-primary font-title-md text-sm py-3.5 px-7 rounded-xl hover:bg-primary-container transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer font-bold"
+            className="bg-primary text-on-primary font-title-md text-xs py-3.5 px-7 rounded-xl hover:bg-primary-container transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer font-bold"
           >
             <Map className="w-4 h-4" />
-            Explore Interactive GIS Map
+            {t("hero_cta_map")}
             <ArrowRight className="w-4 h-4" />
           </button>
           
           <button
             onClick={() => handleScrollTo("citizen-portal")}
-            className="glass-card hover:bg-surface-container-high text-on-surface font-title-md text-sm py-3.5 px-6 rounded-xl transition-all border border-outline-variant/60 flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+            className="glass-card hover:bg-surface-container-high text-on-surface font-title-md text-xs py-3.5 px-6 rounded-xl transition-all border border-outline-variant/60 flex items-center justify-center gap-2 active:scale-95 cursor-pointer font-semibold"
           >
             <PlusCircle className="w-4 h-4 text-primary" />
-            Log Field Specimen
+            {t("hero_cta_log")}
           </button>
         </div>
 
@@ -73,4 +72,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

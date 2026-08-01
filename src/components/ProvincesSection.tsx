@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import WilayaDetailModal from "./WilayaDetailModal";
 import { Search, Trees, Filter, MapPin, X, ExternalLink, ChevronRight, Activity } from "lucide-react";
 
 interface ProvinceData {
@@ -305,96 +306,11 @@ export default function ProvincesSection() {
           ))}
         </div>
 
-        {/* Wilaya Detail Modal / Drawer */}
-        {selectedProvince && (
-          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-            <div className="glass-card bg-surface dark:bg-surface-container-high rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-primary/30 shadow-2xl relative">
-              <button
-                onClick={() => setSelectedProvince(null)}
-                className="absolute top-5 right-5 p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-lg bg-primary text-on-primary font-mono font-bold text-sm">
-                  Wilaya {selectedProvince.code}
-                </span>
-                <span className="text-sm font-semibold text-on-surface-variant font-arabic">
-                  {selectedProvince.nameAr}
-                </span>
-              </div>
-
-              <h3 className="font-headline-lg text-2xl font-bold text-on-background mb-1">
-                {selectedProvince.name} Province
-              </h3>
-              <p className="text-xs text-primary font-semibold mb-6 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5" /> Zone: {selectedProvince.region}
-              </p>
-
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="p-3.5 rounded-xl bg-surface-container dark:bg-surface-container-highest">
-                  <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-0.5">
-                    Forest Canopy Cover
-                  </span>
-                  <span className="font-mono font-bold text-xl text-secondary">
-                    {selectedProvince.forestCoverPct}%
-                  </span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-surface-container dark:bg-surface-container-highest">
-                  <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-0.5">
-                    Logged Specimens
-                  </span>
-                  <span className="font-mono font-bold text-xl text-primary">
-                    {selectedProvince.loggedTrees}
-                  </span>
-                </div>
-              </div>
-
-              <div className="space-y-4 mb-6 text-xs text-on-surface">
-                <div>
-                  <span className="font-semibold block mb-1 text-on-surface-variant">Dominant Native Species:</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedProvince.dominantSpecies.map((sp) => (
-                      <span key={sp} className="px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">
-                        🌲 {sp}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-primary/5 border border-primary/20">
-                  <span className="font-semibold text-primary block mb-0.5 flex items-center gap-1">
-                    <Activity className="w-3.5 h-3.5" /> Active Reforestation Project:
-                  </span>
-                  <p className="text-xs text-on-surface-variant">{selectedProvince.activeProject}</p>
-                </div>
-
-                <div className="flex justify-between items-center text-xs font-mono pt-2 border-t border-outline-variant/30">
-                  <span className="text-on-surface-variant">2030 Target:</span>
-                  <span className="font-bold text-secondary">{selectedProvince.reforestationTarget}</span>
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <a
-                  href="#interactive-map"
-                  onClick={() => setSelectedProvince(null)}
-                  className="flex-1 py-3 bg-primary text-on-primary text-center rounded-xl font-title-md text-xs hover:bg-primary-container transition-colors shadow-sm flex items-center justify-center gap-1.5"
-                >
-                  View Satellite Layer
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-                <button
-                  onClick={() => setSelectedProvince(null)}
-                  className="px-5 py-3 bg-surface-container-high text-on-surface rounded-xl font-title-md text-xs hover:bg-outline-variant transition-colors cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Wilaya Detail Dialog Modal */}
+        <WilayaDetailModal
+          province={selectedProvince}
+          onClose={() => setSelectedProvince(null)}
+        />
       </div>
     </section>
   );

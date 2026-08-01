@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown } from "lucide-react";
+import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
 
@@ -285,6 +285,16 @@ export default function TopNavBar() {
                   <a href="/login" className="block p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950 text-emerald-700 dark:text-emerald-400 cursor-pointer font-bold border-t border-slate-200 dark:border-zinc-800 mt-1 pt-2">
                     Sign In / Register Account →
                   </a>
+                  <button
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      window.location.href = "/login";
+                    }}
+                    className="w-full text-left p-2 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950 text-rose-600 dark:text-rose-400 cursor-pointer font-bold flex items-center justify-between mt-1 border-t border-slate-200 dark:border-zinc-800 pt-2"
+                  >
+                    <span>{language === "AR" ? "تسجيل الخروج" : language === "FR" ? "Déconnexion" : "Sign Out / Logout"}</span>
+                    <LogOut className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </div>
             )}

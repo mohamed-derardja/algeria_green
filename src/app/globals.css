@@ -147,8 +147,8 @@
   background: rgba(248, 250, 248, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(225, 227, 225, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(225, 227, 225, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(13, 99, 27, 0.05);
 }
 
 .dark .glass-card {
@@ -157,12 +157,56 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 36px -8px rgba(13, 99, 27, 0.15);
+}
+
+.dark .glass-card-hover:hover {
+  box-shadow: 0 12px 36px -8px rgba(136, 217, 130, 0.2);
+}
+
 .hero-gradient {
-  background: linear-gradient(180deg, rgba(248,250,248,0.2) 0%, rgba(248,250,248,1) 100%);
+  background: linear-gradient(180deg, rgba(248,250,248,0.3) 0%, rgba(248,250,248,0.85) 60%, rgba(248,250,248,1) 100%);
 }
 
 .dark .hero-gradient {
-  background: linear-gradient(180deg, rgba(17,20,19,0.25) 0%, rgba(17,20,19,1) 100%);
+  background: linear-gradient(180deg, rgba(17,20,19,0.35) 0%, rgba(17,20,19,0.88) 60%, rgba(17,20,19,1) 100%);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
 }
 
 /* Custom Typography Helpers matching Tailwind config */
@@ -210,4 +254,5 @@
   font-family: var(--font-jetbrains-mono), monospace;
   font-weight: 600;
 }
+
 

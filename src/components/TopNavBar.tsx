@@ -313,7 +313,7 @@ export default function TopNavBar() {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 top-16 z-40 lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-zinc-800 animate-fadeIn"
+          className="fixed inset-0 top-16 z-40 lg:hidden p-6 flex flex-col justify-between border-b border-slate-200 dark:border-zinc-800 animate-fadeIn max-h-[calc(100vh-4rem)] overflow-y-auto"
           style={{ backgroundColor: isDarkMode ? "#000000" : "#ffffff" }}
         >
           <div className="space-y-4">

@@ -25,9 +25,9 @@ export default function Footer() {
   return (
     <footer className="w-full bg-surface-container-highest dark:bg-surface-container-lowest border-t border-outline-variant/40 pt-16 pb-12 px-container-padding text-on-surface">
       <div className="container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-outline-variant/30">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-outline-variant/30">
           {/* Column 1: Brand & Tagline */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="sm:col-span-2 lg:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
               <GreenAlgeriaLogo className="w-8 h-8 shrink-0" />
               <span className="font-title-md text-xl font-black text-primary dark:text-primary-fixed-dim tracking-tight">

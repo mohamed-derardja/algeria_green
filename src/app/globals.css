@@ -218,9 +218,16 @@
 }
 
 @media (max-width: 640px) {
+  :root {
+    --spacing-container-padding: 16px;
+  }
   .font-display-lg {
-    font-size: 32px;
-    line-height: 40px;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .font-headline-lg {
+    font-size: 22px;
+    line-height: 30px;
   }
 }
 

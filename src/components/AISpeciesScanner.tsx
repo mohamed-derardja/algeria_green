@@ -178,7 +178,7 @@ export default function AISpeciesScanner() {
           <div className="lg:col-span-7">
             <div className="glass-card rounded-3xl p-6 border border-primary/30 shadow-2xl relative min-h-[400px] flex flex-col justify-between overflow-hidden">
               {/* Scan Screen Frame */}
-              <div className="relative w-full h-56 rounded-2xl overflow-hidden mb-6 border border-outline-variant/40 bg-black">
+              <div className="relative w-full h-44 sm:h-56 rounded-2xl overflow-hidden mb-6 border border-outline-variant/40 bg-black">
                 <img
                   src={selectedSample.imgUrl}
                   alt="Scanning Target"

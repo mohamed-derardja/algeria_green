@@ -317,16 +317,16 @@ export default function InteractiveMapSection() {
             </div>
 
             {/* Leaflet Map Div */}
-            <div ref={mapContainerRef} className="w-full h-[520px] z-10" />
+            <div ref={mapContainerRef} className="w-full h-[360px] sm:h-[450px] lg:h-[520px] z-10" />
 
             {/* Map Footer Bar */}
-            <div className="relative z-20 flex justify-between items-center text-xs text-on-surface-variant bg-surface/90 dark:bg-surface-container-high/90 backdrop-blur-md px-4 py-2 border-t border-outline-variant/30">
-              <span className="flex items-center gap-1 font-mono">
-                <MapPin className="w-3.5 h-3.5 text-primary" />
-                Click pin to inspect Wilaya satellite telemetry
+            <div className="relative z-20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs text-on-surface-variant bg-surface/90 dark:bg-surface-container-high/90 backdrop-blur-md px-3 sm:px-4 py-2 border-t border-outline-variant/30">
+              <span className="flex items-center gap-1 font-mono text-[11px] sm:text-xs">
+                <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                Click pin to inspect telemetry
               </span>
-              <span className="font-mono text-[11px]">
-                Latitude: 28.0° N | Longitude: 3.0° E
+              <span className="font-mono text-[10px] sm:text-[11px]">
+                28.0° N | 3.0° E
               </span>
             </div>
           </div>

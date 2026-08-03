@@ -47,10 +47,10 @@ export default function HeroSection() {
         </p>
 
         {/* Dual Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-12 w-full justify-center max-w-md">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 w-full justify-center max-w-md px-2 sm:px-0">
           <button
             onClick={() => handleScrollTo("interactive-map")}
-            className="bg-primary text-on-primary font-title-md text-xs py-3.5 px-7 rounded-xl hover:bg-primary-container transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer font-bold"
+            className="w-full sm:w-auto bg-primary text-on-primary font-title-md text-xs sm:text-sm py-3.5 px-7 rounded-xl hover:bg-primary-container transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer font-bold"
           >
             <Map className="w-4 h-4" />
             {t("hero_cta_map")}
@@ -59,7 +59,7 @@ export default function HeroSection() {
           
           <button
             onClick={() => handleScrollTo("citizen-portal")}
-            className="glass-card hover:bg-surface-container-high text-on-surface font-title-md text-xs py-3.5 px-6 rounded-xl transition-all border border-outline-variant/60 flex items-center justify-center gap-2 active:scale-95 cursor-pointer font-semibold"
+            className="w-full sm:w-auto glass-card hover:bg-surface-container-high text-on-surface font-title-md text-xs sm:text-sm py-3.5 px-6 rounded-xl transition-all border border-outline-variant/60 flex items-center justify-center gap-2 active:scale-95 cursor-pointer font-semibold"
           >
             <PlusCircle className="w-4 h-4 text-primary" />
             {t("hero_cta_log")}

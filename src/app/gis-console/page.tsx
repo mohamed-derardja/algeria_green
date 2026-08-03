@@ -265,11 +265,55 @@ export default function GISConsolePage() {
 
         {/* Center Dynamic Tab Content Area */}
         <main className="flex-1 relative bg-surface overflow-hidden flex flex-col">
+          {/* Mobile GIS Console Tab Bar */}
+          <div className="md:hidden flex overflow-x-auto gap-2 p-2 bg-surface-container border-b border-outline-variant/30 text-xs shrink-0 no-scrollbar">
+            <button
+              onClick={() => setActiveTab("sat")}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "sat" ? "bg-primary text-on-primary font-bold" : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <MapIcon className="w-3.5 h-3.5" /> Satellite Map
+            </button>
+            <button
+              onClick={() => setActiveTab("forest")}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "forest" ? "bg-primary text-on-primary font-bold" : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <Trees className="w-3.5 h-3.5" /> Inventory
+            </button>
+            <button
+              onClick={() => setActiveTab("reforest")}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "reforest" ? "bg-primary text-on-primary font-bold" : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <Sprout className="w-3.5 h-3.5" /> Green Dam
+            </button>
+            <button
+              onClick={() => setActiveTab("risk")}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "risk" ? "bg-primary text-on-primary font-bold" : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5" /> Risk Zones
+            </button>
+            <button
+              onClick={() => setActiveTab("logs")}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "logs" ? "bg-primary text-on-primary font-bold" : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" /> Field Logs
+            </button>
+          </div>
+
           {activeTab === "sat" && (
-            <div className="flex-1 relative h-full w-full flex">
+            <div className="flex-1 relative h-full w-full flex flex-col lg:flex-row overflow-hidden">
               <div className="flex-1 relative h-full w-full">
                 {/* Leaflet Map Div */}
-                <div ref={mapContainerRef} className="w-full h-full z-10" />
+                <div ref={mapContainerRef} className="w-full h-full z-10 min-h-[300px]" />
 
                 {/* Floating Zoom & Control Widgets */}
                 <div className="absolute top-5 left-5 z-[400] flex flex-col gap-2">
@@ -290,7 +334,7 @@ export default function GISConsolePage() {
                 </div>
 
                 {/* Floating Layer Management Panel */}
-                <div className="absolute top-5 right-5 lg:right-[340px] z-[400] glass-card rounded-2xl p-4 w-64 shadow-xl border border-outline-variant/40 backdrop-blur-md">
+                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 lg:right-[340px] z-[400] glass-card rounded-2xl p-3 sm:p-4 w-52 sm:w-64 shadow-xl border border-outline-variant/40 backdrop-blur-md">
                   <h3 className="font-title-md text-xs text-on-surface font-bold mb-3 flex items-center gap-2">
                     <Layers className="w-4 h-4 text-primary" /> Active GIS Layers
                   </h3>
@@ -317,7 +361,7 @@ export default function GISConsolePage() {
 
               {/* Right Data Detail Panel */}
               {showRightPanel && (
-                <aside className="w-[320px] bg-surface dark:bg-surface-container-high h-full border-l border-outline-variant/30 flex-shrink-0 flex flex-col z-30 shadow-2xl animate-fadeIn">
+                <aside className="w-full lg:w-[320px] bg-surface dark:bg-surface-container-high h-[320px] lg:h-full border-t lg:border-t-0 lg:border-l border-outline-variant/30 flex-shrink-0 flex flex-col z-30 shadow-2xl animate-fadeIn">
                   <div className="p-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest dark:bg-surface-container-highest">
                     <h3 className="font-title-md text-sm text-on-surface font-bold">GIS Data Detail</h3>
                     <button
@@ -437,7 +481,7 @@ export default function GISConsolePage() {
                   </div>
                 </div>
 
-                <div className="glass-card rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xl">
+                <div className="glass-card rounded-2xl overflow-hidden overflow-x-auto border border-outline-variant/40 shadow-xl">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
                       <tr className="bg-surface-container-high dark:bg-surface-container-highest text-on-surface border-b border-outline-variant/30 font-bold uppercase tracking-wider text-[11px]">

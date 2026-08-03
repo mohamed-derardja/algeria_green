@@ -61,7 +61,7 @@ export default function CitizenScienceCTA() {
                   {t("citizen_desc")}
                 </p>
 
-                <div className="grid grid-cols-3 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
                   <div className="p-3 rounded-xl bg-surface-container dark:bg-surface-container-high border border-outline-variant/30">
                     <span className="block font-mono font-bold text-xl text-primary">5,240+</span>
                     <span className="text-[11px] text-on-surface-variant uppercase font-label-sm">Active Volunteers</span>

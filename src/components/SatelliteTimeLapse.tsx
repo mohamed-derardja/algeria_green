@@ -87,15 +87,15 @@ export default function SatelliteTimeLapse() {
           </div>
 
           {/* Image Comparison Container */}
-          <div className="relative w-full h-[420px] rounded-2xl overflow-hidden select-none border border-outline-variant/30 bg-black">
+          <div className="relative w-full h-[280px] sm:h-[360px] lg:h-[420px] rounded-2xl overflow-hidden select-none border border-outline-variant/30 bg-black">
             {/* 2026 Present Sentinel-2 Imagery (Base Layer) */}
             <img
               src={currentData.img2026}
               alt="2026 Present Sentinel-2 Satellite View"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute top-4 right-4 bg-primary text-on-primary font-mono text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" /> 2026 Sentinel-2 Active
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-primary text-on-primary font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md z-10 flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> 2026 Sentinel-2
             </div>
 
             {/* 2010 Past Landsat-5 Imagery (Clipped Layer using CSS clipPath) */}
@@ -108,8 +108,8 @@ export default function SatelliteTimeLapse() {
                 alt="2010 Historical Landsat-5 Satellite View"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute top-4 left-4 bg-surface-container-highest text-on-surface font-mono text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">
-                📷 2010 Landsat-5 Baseline
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-surface-container-highest text-on-surface font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md z-10">
+                📷 2010 Baseline
               </div>
             </div>
 

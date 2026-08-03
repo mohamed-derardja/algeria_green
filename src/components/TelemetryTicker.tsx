@@ -26,21 +26,21 @@ export default function TelemetryTicker() {
           </span>
         </div>
 
-        <div className="hidden md:flex items-center gap-6 overflow-hidden whitespace-nowrap text-[11px] text-emerald-300/90">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto whitespace-nowrap text-[11px] text-emerald-300/90 py-0.5 no-scrollbar max-w-full">
+          <div className="flex items-center gap-1.5 shrink-0">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>National Trees Logged:</span>
+            <span>Trees Logged:</span>
             <span className="font-bold text-white tracking-wider">
               {treeCount.toLocaleString()}
             </span>
           </div>
 
-          <span>•</span>
-          <span>Batna Cedar Pass: <span className="text-emerald-400 font-bold">NDVI 0.78 Verified</span></span>
-          <span>•</span>
-          <span>Djelfa Green Dam: <span className="text-amber-400 font-bold">+1.8M Trees Active</span></span>
-          <span>•</span>
-          <span>Kabylie Fire Telemetry: <span className="text-emerald-400 font-bold">Low Anomaly</span></span>
+          <span className="opacity-50">•</span>
+          <span className="shrink-0">Batna Cedar: <span className="text-emerald-400 font-bold">NDVI 0.78</span></span>
+          <span className="opacity-50">•</span>
+          <span className="shrink-0">Djelfa Belt: <span className="text-amber-400 font-bold">+1.8M Trees</span></span>
+          <span className="opacity-50">•</span>
+          <span className="shrink-0">Kabylie: <span className="text-emerald-400 font-bold">Low Fire Risk</span></span>
         </div>
 
         <div className="flex items-center gap-1 text-[10px] text-emerald-300 bg-emerald-900/60 px-2.5 py-0.5 rounded-full border border-emerald-700/50 shrink-0">

@@ -69,7 +69,7 @@ export default function StatsGrid() {
   return (
     <div className="w-full mt-8">
       {/* Stats Grid (Bento style) */}
-      <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+      <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {stats.map((stat) => {
           const IconComponent = stat.icon;
           const isSelected = selectedStat?.id === stat.id;
@@ -77,9 +77,9 @@ export default function StatsGrid() {
             <div
               key={stat.id}
               onClick={() => setSelectedStat(isSelected ? null : stat)}
-              className={`glass-card glass-card-hover rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden ${
-                stat.colSpanClass || ""
-              } ${isSelected ? "ring-2 ring-primary border-primary scale-[1.02] shadow-xl" : ""}`}
+              className={`glass-card glass-card-hover rounded-2xl p-3.5 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden ${
+                isSelected ? "ring-2 ring-primary border-primary scale-[1.02] shadow-xl" : ""
+              }`}
             >
               <div className="flex items-center gap-1.5 mb-1 text-on-surface-variant">
                 <IconComponent className="w-4 h-4 text-primary" />

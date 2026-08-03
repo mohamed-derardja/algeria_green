@@ -45,7 +45,7 @@ export default function WilayaDetailModal({ province, onClose }: Props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-6">
           <div className="p-3 rounded-2xl bg-surface-container dark:bg-surface-container-highest border border-outline-variant/30 text-center">
             <span className="block font-mono font-bold text-lg text-primary">{province.forestCoverPct}%</span>
             <span className="text-[10px] text-on-surface-variant uppercase font-label-sm">Forest Cover</span>

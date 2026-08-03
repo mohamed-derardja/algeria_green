@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { HelpCircle, Check, ArrowRight, RotateCcw, Trees, Sparkles } from "lucide-react";
+import AchievementUnlockModal from "./AchievementUnlockModal";
 
 interface Question {
   id: number;
@@ -16,6 +17,7 @@ export default function EcoZoneQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [completed, setCompleted] = useState(false);
+  const [showAchievement, setShowAchievement] = useState(false);
 
   const questions: Question[] = [
     {
@@ -50,6 +52,7 @@ export default function EcoZoneQuiz() {
       setStep((prev) => prev + 1);
     } else {
       setCompleted(true);
+      setShowAchievement(true);
     }
   };
 
@@ -171,6 +174,16 @@ export default function EcoZoneQuiz() {
           </div>
         </div>
       )}
+
+      {/* Gamified Achievement Unlock Modal & Confetti Burst */}
+      <AchievementUnlockModal
+        isOpen={showAchievement}
+        onClose={() => setShowAchievement(false)}
+        title="Eco-Zone Expert"
+        badgeName="🌿 Master Ecosystem Selector"
+        xpReward={250}
+        description="You have successfully analyzed Algeria's ecological zones and identified the optimal native species strategy!"
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Smartphone, CheckCircle, Upload, MapPin, Sparkles, Award } from "lucide-react";
 import TreeAdoptionModal from "./TreeAdoptionModal";
+import CarbonImpactCalculator from "./CarbonImpactCalculator";
 
 export default function CitizenScienceCTA() {
   const { t } = useLanguage();
@@ -215,6 +216,11 @@ export default function CitizenScienceCTA() {
                   </form>
                 )}
               </div>
+            </div>
+
+            {/* Interactive Carbon & Ecosystem Impact Calculator */}
+            <div className="mt-8">
+              <CarbonImpactCalculator />
             </div>
           </div>
         </div>

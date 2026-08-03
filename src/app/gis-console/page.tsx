@@ -30,6 +30,10 @@ import {
   BarChart3
 } from "lucide-react";
 import { Table, Tag, Badge, Switch, Progress } from "antd";
+import TelemetryCharts from "@/components/TelemetryCharts";
+import GeoJSONExporter from "@/components/GeoJSONExporter";
+import SatelliteOrbitTracker from "@/components/SatelliteOrbitTracker";
+import IncidentAlertFeed from "@/components/IncidentAlertFeed";
 import "leaflet/dist/leaflet.css";
 
 interface GISLayer {
@@ -56,6 +60,7 @@ export default function GISConsolePage() {
   const [activeTab, setActiveTab] = useState<"sat" | "forest" | "reforest" | "risk" | "logs">("sat");
   const [showRightPanel, setShowRightPanel] = useState(true);
   const [planGenerated, setPlanGenerated] = useState(false);
+  const [showExporterModal, setShowExporterModal] = useState(false);
   const [showNewSurveyModal, setShowNewSurveyModal] = useState(false);
   const [searchForest, setSearchForest] = useState("");
 
@@ -396,6 +401,11 @@ export default function GISConsolePage() {
                         </p>
                       </div>
                     </div>
+                    {/* Live Satellite Orbit & Pass Tracker */}
+                    <SatelliteOrbitTracker />
+
+                    {/* Real-Time Environmental Incident Alert Feed */}
+                    <IncidentAlertFeed />
 
                     <div className="space-y-2">
                       <h5 className="font-title-md text-xs text-on-surface font-bold border-b border-outline-variant/30 pb-1.5">
@@ -470,17 +480,29 @@ export default function GISConsolePage() {
                     </p>
                   </div>
 
-                  <div className="relative w-72">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" />
-                    <input
-                      type="text"
-                      value={searchForest}
-                      onChange={(e) => setSearchForest(e.target.value)}
-                      placeholder="Filter by Wilaya name or code..."
-                      className="w-full bg-surface-container dark:bg-surface-container-high rounded-full py-2 pl-9 pr-4 text-xs text-on-surface border border-outline-variant/30 outline-none focus:ring-2 focus:ring-primary"
-                    />
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setShowExporterModal(true)}
+                      className="px-3.5 py-2 rounded-full bg-emerald-600/10 hover:bg-emerald-600 text-emerald-600 dark:text-emerald-400 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs whitespace-nowrap"
+                    >
+                      <Download className="w-4 h-4" /> Export GIS Datasets (GeoJSON/KML/CSV)
+                    </button>
+
+                    <div className="relative w-64">
+                      <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" />
+                      <input
+                        type="text"
+                        value={searchForest}
+                        onChange={(e) => setSearchForest(e.target.value)}
+                        placeholder="Filter by Wilaya name or code..."
+                        className="w-full bg-surface-container dark:bg-surface-container-high rounded-full py-2 pl-9 pr-4 text-xs text-on-surface border border-outline-variant/30 outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
                   </div>
                 </div>
+
+                {/* Live Telemetry Charts Visualizer */}
+                <TelemetryCharts />
 
                 <div className="glass-card rounded-2xl p-2 border border-outline-variant/40 shadow-xl overflow-x-auto">
                   <Table
@@ -773,6 +795,12 @@ export default function GISConsolePage() {
           </div>
         </div>
       )}
+
+      {/* GeoJSON & KML Open Data Exporter Modal */}
+      <GeoJSONExporter
+        isOpen={showExporterModal}
+        onClose={() => setShowExporterModal(false)}
+      />
     </div>
   );
 }

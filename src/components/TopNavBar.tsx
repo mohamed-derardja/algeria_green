@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut, Command } from "lucide-react";
+import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut, Command, FileText } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
 import CommandPaletteModal from "./CommandPaletteModal";
+import ExecutiveReportModal from "./ExecutiveReportModal";
 
 export default function TopNavBar() {
   const pathname = usePathname();
@@ -18,6 +19,7 @@ export default function TopNavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -120,6 +122,15 @@ export default function TopNavBar() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* Executive Report PDF Trigger */}
+          <button
+            onClick={() => setShowReportModal(true)}
+            title="Generate Official Executive Briefing Report"
+            className="px-3 py-1.5 rounded-full text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-600 hover:text-white border border-emerald-500/30 transition-all cursor-pointer hidden sm:flex items-center gap-1.5 shadow-2xs"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Executive Briefing</span>
+          </button>
           {/* Language Switcher */}
           <div className="relative">
             <button
@@ -391,6 +402,12 @@ export default function TopNavBar() {
       <CommandPaletteModal
         isOpen={showCommandPalette}
         onClose={() => setShowCommandPalette(false)}
+      />
+
+      {/* Official Executive Briefing Report Modal */}
+      <ExecutiveReportModal
+        isOpen={showReportModal}
+        onClose={() => setShowReportModal(false)}
       />
     </>
   );

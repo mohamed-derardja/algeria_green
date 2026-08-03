@@ -12,6 +12,8 @@ import CitizenScienceCTA from "@/components/CitizenScienceCTA";
 import TimelineSection from "@/components/TimelineSection";
 import Footer from "@/components/Footer";
 import AmbientSoundscapeWidget from "@/components/AmbientSoundscapeWidget";
+import TopographyVisualizer from "@/components/TopographyVisualizer";
+import HerbariumShowcase from "@/components/HerbariumShowcase";
 
 export default function Home() {
   return (
@@ -42,11 +44,17 @@ export default function Home() {
         {/* 2. Live Interactive Satellite GIS Map & Heatmap */}
         <InteractiveMapSection />
 
+        {/* Topographic Elevation & Green Dam Visualizer */}
+        <TopographyVisualizer />
+
         {/* 3. 16-Year Satellite Time-Lapse Comparison Slider (2010 vs 2026) */}
         <SatelliteTimeLapse />
 
         {/* 4. AI Computer Vision Species Recognition & Health Diagnostic Scanner */}
         <AISpeciesScanner />
+
+        {/* 3D Herbarium Botanical Collection */}
+        <HerbariumShowcase />
 
         {/* 5. National Initiatives & Environmental Pillars */}
         <InitiativesGrid />

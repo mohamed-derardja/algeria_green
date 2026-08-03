@@ -29,6 +29,7 @@ export default function CitizenPortalPage() {
   const [joinedMission, setJoinedMission] = useState(false);
   const [volunteerCount, setVolunteerCount] = useState(145);
   const [timeframe, setTimeframe] = useState<"month" | "all">("month");
+  const [showExporterModal, setShowExporterModal] = useState(false);
 
   const handleClaimReward = () => {
     if (!claimedReward) {
@@ -363,8 +364,18 @@ export default function CitizenPortalPage() {
                 View Full National Rankings
               </button>
 
-              {/* GeoJSON & KML Data Exporter */}
-              <GeoJSONExporter />
+              {/* GeoJSON & KML Data Exporter Button */}
+              <button
+                onClick={() => setShowExporterModal(true)}
+                className="w-full py-2.5 text-xs bg-emerald-600/10 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-300 hover:text-white font-semibold border border-emerald-500/30 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                📥 Export Open GIS Datasets
+              </button>
+
+              <GeoJSONExporter
+                isOpen={showExporterModal}
+                onClose={() => setShowExporterModal(false)}
+              />
             </div>
 
             {/* Quick Actions / Nearby Missions */}

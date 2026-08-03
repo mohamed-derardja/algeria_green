@@ -1,6 +1,7 @@
 "use client";
 
 import { X, MapPin, Trees, ShieldCheck, Activity, Users, ArrowRight } from "lucide-react";
+import EnvironmentalRadarChart from "./EnvironmentalRadarChart";
 
 interface ProvinceData {
   code: string;
@@ -60,6 +61,11 @@ export default function WilayaDetailModal({ province, onClose }: Props) {
             <span className="block font-mono font-bold text-lg text-tertiary">{province.ndviScore}</span>
             <span className="text-[10px] text-on-surface-variant uppercase font-label-sm">NDVI Index</span>
           </div>
+        </div>
+
+        {/* 5-Axis Environmental Radar Chart Visualizer */}
+        <div className="mb-4">
+          <EnvironmentalRadarChart wilayaName={province.name} />
         </div>
 
         <div className="space-y-4 text-xs">

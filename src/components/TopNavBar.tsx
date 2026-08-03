@@ -2,11 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut, Command, FileText } from "lucide-react";
+import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut, Command, FileText, LogIn, Satellite, TreePine, AlertTriangle, PartyPopper } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
 import CommandPaletteModal from "./CommandPaletteModal";
 import ExecutiveReportModal from "./ExecutiveReportModal";
+
+interface Notification {
+  id: number;
+  title: string;
+  message: string;
+  type: "satellite" | "milestone" | "alert" | "achievement";
+  time: string;
+  read: boolean;
+}
 
 export default function TopNavBar() {
   const pathname = usePathname();
@@ -21,6 +30,56 @@ export default function TopNavBar() {
   const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
 
+  const [notifications, setNotifications] = useState<Notification[]>([
+    { id: 1, title: "Sentinel-2A Overpass Complete", message: "Multispectral capture of Batna Aurès massif completed. 10m GSD imagery now available.", type: "satellite", time: "2 min ago", read: false },
+    { id: 2, title: "Reforestation Milestone 🎉", message: "12.5 million trees logged nationally — 100k added this week across 8 Wilayas.", type: "milestone", time: "1 hour ago", read: false },
+    { id: 3, title: "Thermal Anomaly Detected", message: "Elevated surface temperature in Jijel coastal forest zone. Fire risk assessment triggered.", type: "alert", time: "3 hours ago", read: false },
+    { id: 4, title: "Badge Unlocked: Forest Pioneer", message: "Your community rank advanced to Level 5 — you've logged 150+ verified specimens.", type: "achievement", time: "Yesterday", read: true },
+  ]);
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const markAllRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const markRead = (id: number) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+  };
+
+  const notificationIcon = (type: Notification["type"]) => {
+    switch (type) {
+      case "satellite": return <Satellite className="w-4 h-4 text-blue-500" />;
+      case "milestone": return <TreePine className="w-4 h-4 text-emerald-500" />;
+      case "alert": return <AlertTriangle className="w-4 h-4 text-amber-500" />;
+      case "achievement": return <PartyPopper className="w-4 h-4 text-purple-500" />;
+    }
+  };
+
+  // Dark mode: read from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("algeria-green-theme");
+    if (stored === "light") {
+      setIsDarkMode(false);
+    } else {
+      setIsDarkMode(true);
+    }
+  }, []);
+
+  // Dark mode: apply class and persist
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (isDarkMode) {
+      htmlElement.classList.add("dark");
+      htmlElement.classList.remove("light");
+      localStorage.setItem("algeria-green-theme", "dark");
+    } else {
+      htmlElement.classList.remove("dark");
+      htmlElement.classList.add("light");
+      localStorage.setItem("algeria-green-theme", "light");
+    }
+  }, [isDarkMode]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -34,17 +93,6 @@ export default function TopNavBar() {
 
   useEffect(() => {
     const htmlElement = document.documentElement;
-    if (isDarkMode) {
-      htmlElement.classList.add("dark");
-      htmlElement.classList.remove("light");
-    } else {
-      htmlElement.classList.add("light");
-      htmlElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
-  useEffect(() => {
-    const htmlElement = document.documentElement;
     if (language === "AR") {
       htmlElement.setAttribute("dir", "rtl");
       htmlElement.setAttribute("lang", "ar");
@@ -53,6 +101,25 @@ export default function TopNavBar() {
       htmlElement.setAttribute("lang", language.toLowerCase());
     }
   }, [language]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setShowNotifications(false);
+      setShowHelp(false);
+      setShowUserMenu(false);
+      setShowLangMenu(false);
+    };
+    // Small delay to let button click register first
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("[data-dropdown]")) {
+        handleClickOutside();
+      }
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prev) => !prev);
@@ -132,9 +199,10 @@ export default function TopNavBar() {
             <span>Executive Briefing</span>
           </button>
           {/* Language Switcher */}
-          <div className="relative">
+          <div className="relative" data-dropdown>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setShowLangMenu(!showLangMenu);
                 setShowNotifications(false);
                 setShowHelp(false);
@@ -200,9 +268,10 @@ export default function TopNavBar() {
           </button>
 
           {/* Notifications Button */}
-          <div className="relative">
+          <div className="relative" data-dropdown>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setShowNotifications(!showNotifications);
                 setShowHelp(false);
                 setShowUserMenu(false);
@@ -211,36 +280,75 @@ export default function TopNavBar() {
               className="p-2 rounded-full text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-all cursor-pointer active:scale-95 flex items-center justify-center relative shadow-2xs"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full ring-2 ring-white dark:ring-black"></span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-600 rounded-full ring-2 ring-white dark:ring-black flex items-center justify-center text-[9px] font-mono font-bold text-white">
+                  {unreadCount}
+                </span>
+              )}
             </button>
 
-            {/* Notifications Popover */}
+            {/* Enhanced Notifications Popover */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 p-4 z-50 text-left animate-fadeIn">
-                <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-zinc-800 mb-3">
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Recent GIS Alerts</h4>
-                  <span className="text-[11px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2 py-0.5 rounded-full font-mono font-bold">
-                    3 New
-                  </span>
+              <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 z-50 text-left animate-fadeIn overflow-hidden">
+                <div className="flex justify-between items-center p-4 border-b border-slate-200 dark:border-zinc-800">
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-primary" />
+                    Notifications
+                  </h4>
+                  <button
+                    onClick={markAllRead}
+                    className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hover:underline cursor-pointer"
+                  >
+                    Mark all read
+                  </button>
                 </div>
-                <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors">
-                    <p className="font-bold text-emerald-800 dark:text-emerald-400">Aurès Cedar Pass (Batna)</p>
-                    <p className="text-[11px] text-slate-600 dark:text-zinc-300 mt-0.5">50,000 Cedar trees added to satellite registry.</p>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors">
-                    <p className="font-bold text-emerald-800 dark:text-emerald-400">Barrage Vert Telemetry</p>
-                    <p className="text-[11px] text-slate-600 dark:text-zinc-300 mt-0.5">High Plateaus re-afforestation dataset published.</p>
-                  </div>
+
+                <div className="max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-zinc-800">
+                  {notifications.map((n) => (
+                    <div
+                      key={n.id}
+                      onClick={() => markRead(n.id)}
+                      className={`flex gap-3 p-3.5 hover:bg-slate-50 dark:hover:bg-zinc-800/60 cursor-pointer transition-colors ${
+                        !n.read ? "bg-emerald-50/50 dark:bg-emerald-950/20" : ""
+                      }`}
+                    >
+                      <div className="shrink-0 mt-0.5">
+                        {notificationIcon(n.type)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                            {n.title}
+                          </p>
+                          {!n.read && (
+                            <span className="w-2 h-2 bg-emerald-500 rounded-full shrink-0" />
+                          )}
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed line-clamp-2">
+                          {n.message}
+                        </p>
+                        <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono mt-1 block">
+                          {n.time}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="p-3 border-t border-slate-200 dark:border-zinc-800">
+                  <button className="w-full py-2 text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-xl transition-colors cursor-pointer">
+                    View All Notifications
+                  </button>
                 </div>
               </div>
             )}
           </div>
 
           {/* Help Button */}
-          <div className="relative">
+          <div className="relative" data-dropdown>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setShowHelp(!showHelp);
                 setShowNotifications(false);
                 setShowUserMenu(false);
@@ -269,10 +377,22 @@ export default function TopNavBar() {
             )}
           </div>
 
+          {/* Sign In Button (visible when not on /login) */}
+          {pathname !== "/login" && (
+            <a
+              href="/login"
+              className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 dark:text-zinc-200 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 hover:border-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 transition-all cursor-pointer shadow-2xs"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>{language === "AR" ? "تسجيل الدخول" : language === "FR" ? "Connexion" : "Sign In"}</span>
+            </a>
+          )}
+
           {/* User Profile Avatar */}
-          <div className="relative ml-1">
+          <div className="relative ml-1" data-dropdown>
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setShowUserMenu(!showUserMenu);
                 setShowNotifications(false);
                 setShowHelp(false);
@@ -362,6 +482,16 @@ export default function TopNavBar() {
           </div>
 
           <div className="pt-6 border-t border-slate-200 dark:border-zinc-800 space-y-3">
+            {/* Mobile Sign In Button */}
+            <a
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-900 dark:text-white text-xs font-bold hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors border border-slate-300 dark:border-zinc-700"
+            >
+              <LogIn className="w-4 h-4" />
+              {language === "AR" ? "تسجيل الدخول" : language === "FR" ? "Se Connecter" : "Sign In / Register"}
+            </a>
+
             <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900 p-2 rounded-xl border border-slate-300 dark:border-zinc-800">
               <span className="text-xs font-bold text-slate-800 dark:text-zinc-200">Language</span>
               <div className="flex gap-1">

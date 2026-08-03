@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import TopNavBar from "@/components/TopNavBar";
+import Breadcrumb from "@/components/Breadcrumb";
 import {
   Map as MapIcon,
   Trees,
@@ -183,6 +184,7 @@ export default function GISConsolePage() {
     <div className="flex flex-col h-screen overflow-hidden bg-background text-on-background">
       {/* Shared Fixed Top Header */}
       <TopNavBar />
+      <Breadcrumb />
 
       {/* Main Workspace Layout */}
       <div className="flex flex-1 pt-16 h-full w-full">

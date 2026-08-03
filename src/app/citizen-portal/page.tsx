@@ -4,6 +4,7 @@ import { useState } from "react";
 import TopNavBar from "@/components/TopNavBar";
 import Footer from "@/components/Footer";
 import GeoJSONExporter from "@/components/GeoJSONExporter";
+import Breadcrumb from "@/components/Breadcrumb";
 import {
   Trees,
   Award,
@@ -69,9 +70,10 @@ export default function CitizenPortalPage() {
     <div className="min-h-screen flex flex-col bg-background text-on-background">
       {/* Shared Fixed Top Navigation Bar */}
       <TopNavBar />
+      <Breadcrumb />
 
       {/* Main Content Area */}
-      <main className="flex-grow w-full max-w-7xl mx-auto px-container-padding pt-24 pb-16">
+      <main className="flex-grow w-full max-w-7xl mx-auto px-container-padding pt-4 pb-16">
         {/* Header Section */}
         <header className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary dark:text-primary-fixed text-xs font-semibold uppercase tracking-wider mb-3">

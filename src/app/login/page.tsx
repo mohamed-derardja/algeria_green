@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TopNavBar from "@/components/TopNavBar";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 import GreenAlgeriaLogo from "@/components/GreenAlgeriaLogo";
 import { useLanguage } from "@/context/LanguageContext";
 import { Lock, Mail, User, ShieldCheck, ArrowRight, Bot, Trees, Eye, EyeOff, CheckCircle2 } from "lucide-react";
@@ -31,6 +32,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-black text-slate-900 dark:text-white transition-colors duration-200">
       {/* Shared Fixed Top Bar */}
       <TopNavBar />
+      <Breadcrumb />
 
       {/* Main Login Workspace Area */}
       <main className="flex-grow pt-24 pb-16 px-container-padding flex items-center justify-center relative overflow-hidden">

@@ -21,7 +21,8 @@ import {
   Sprout,
   Heart
 } from "lucide-react";
-import { Progress, message, Tag } from "antd";
+import { Progress, Tag } from "antd";
+import { useToast } from "@/components/ToastProvider";
 
 export default function CitizenPortalPage() {
   const [xp, setXp] = useState(2400);
@@ -30,12 +31,13 @@ export default function CitizenPortalPage() {
   const [volunteerCount, setVolunteerCount] = useState(145);
   const [timeframe, setTimeframe] = useState<"month" | "all">("month");
   const [showExporterModal, setShowExporterModal] = useState(false);
+  const toast = useToast();
 
   const handleClaimReward = () => {
     if (!claimedReward) {
       setXp((prev) => prev + 150);
       setClaimedReward(true);
-      message.success("🎉 Daily XP Reward (+150 XP) successfully claimed!");
+      toast.success("🎉 Daily XP Reward Claimed!", "+150 XP added to your Sapling Guardian rank.");
     }
   };
 

@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { Trees, Shield, MapPin, Users, Globe, X, TrendingUp } from "lucide-react";
+import AnimatedCounter from "./AnimatedCounter";
 
 interface StatItem {
   id: string;
-  value: string;
+  numericValue: number;
+  displaySuffix: string;
   label: string;
   textColorClass: string;
   icon: any;
   colSpanClass?: string;
   description: string;
   trend: string;
+  formatFn?: (n: number) => string;
 }
 
 export default function StatsGrid() {
@@ -20,49 +23,59 @@ export default function StatsGrid() {
   const stats: StatItem[] = [
     {
       id: "trees",
-      value: "12.4M+",
+      numericValue: 12.4,
+      displaySuffix: "M+",
       label: "Trees Logged",
       textColorClass: "text-primary dark:text-primary-fixed",
       icon: Trees,
       description: "Over 12,450,000 verified tree specimens recorded using ground surveys and high-res satellite telemetry.",
       trend: "+15% YoY Growth",
+      formatFn: (n: number) => n.toFixed(1),
     },
     {
       id: "coverage",
-      value: "14%",
+      numericValue: 14,
+      displaySuffix: "%",
       label: "Forest Canopy",
       textColorClass: "text-secondary dark:text-secondary-fixed-dim",
       icon: Shield,
       description: "Targeting 20% national coverage by 2030 through the Green Dam revitalization project.",
       trend: "Goal: 20% by 2030",
+      formatFn: (n: number) => Math.round(n).toString(),
     },
     {
       id: "lands",
-      value: "45k",
+      numericValue: 45,
+      displaySuffix: "k",
       label: "Hectares Mapped",
       textColorClass: "text-tertiary dark:text-tertiary-fixed-dim",
       icon: MapPin,
       colSpanClass: "md:col-span-1 col-span-2",
       description: "45,000 hectares of diverse ecosystems continuously monitored via Sentinel-2 and Landsat satellite constellations.",
       trend: "Real-time Telemetry",
+      formatFn: (n: number) => Math.round(n).toString(),
     },
     {
       id: "volunteers",
-      value: "5.2k",
+      numericValue: 5.2,
+      displaySuffix: "k",
       label: "Volunteers",
       textColorClass: "text-primary-container dark:text-on-primary-container",
       icon: Users,
       description: "Active community participants submitting field observations via the mobile Citizen Science App.",
       trend: "58 Wilayas Active",
+      formatFn: (n: number) => n.toFixed(1),
     },
     {
       id: "provinces",
-      value: "58",
+      numericValue: 58,
+      displaySuffix: "",
       label: "Wilayas",
       textColorClass: "text-secondary-container dark:text-secondary-fixed",
       icon: Globe,
       description: "Complete national coverage across all 58 Algerian provinces from coastal forests to Saharan oases.",
       trend: "100% Regional Reach",
+      formatFn: (n: number) => Math.round(n).toString(),
     },
   ];
 
@@ -88,9 +101,13 @@ export default function StatsGrid() {
                 </span>
               </div>
 
-              <span className={`font-mono text-2xl sm:text-3xl font-bold ${stat.textColorClass} my-1`}>
-                {stat.value}
-              </span>
+              <AnimatedCounter
+                value={stat.numericValue}
+                suffix={stat.displaySuffix}
+                duration={2200}
+                formatFn={stat.formatFn}
+                className={`font-mono text-2xl sm:text-3xl font-bold ${stat.textColorClass} my-1`}
+              />
 
               <span className="inline-flex items-center gap-1 text-[10px] bg-primary/10 dark:bg-primary-fixed/20 text-primary dark:text-primary-fixed font-mono px-2 py-0.5 rounded-full font-medium">
                 <TrendingUp className="w-2.5 h-2.5" />
@@ -108,7 +125,7 @@ export default function StatsGrid() {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
               <h4 className="font-title-md text-sm text-primary dark:text-primary-fixed font-bold">
-                {selectedStat.label}: <span className="font-mono font-bold">{selectedStat.value}</span>
+                {selectedStat.label}: <span className="font-mono font-bold">{selectedStat.numericValue}{selectedStat.displaySuffix}</span>
               </h4>
             </div>
             <p className="font-body-md text-xs text-on-surface-variant mt-1 leading-relaxed">

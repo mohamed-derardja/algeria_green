@@ -14,6 +14,8 @@ import Footer from "@/components/Footer";
 import AmbientSoundscapeWidget from "@/components/AmbientSoundscapeWidget";
 import TopographyVisualizer from "@/components/TopographyVisualizer";
 import HerbariumShowcase from "@/components/HerbariumShowcase";
+import ScrollReveal from "@/components/ScrollReveal";
+import ScrollProgressFAB from "@/components/ScrollProgressFAB";
 
 export default function Home() {
   return (
@@ -22,55 +24,100 @@ export default function Home() {
       <TopNavBar />
 
       {/* Main Page Content */}
-      <main className="pt-16 flex-1 w-full">
+      <main className="pt-16 flex-1 w-full scroll-snap-container">
         {/* Live Sentinel-2 Satellite Orbit Telemetry Ticker */}
         <TelemetryTicker />
 
         {/* 1. Hero Section with satellite backdrop & Bento stats */}
-        <HeroSection />
+        <ScrollReveal direction="fade" duration={900}>
+          <div className="scroll-snap-section">
+            <HeroSection />
+          </div>
+        </ScrollReveal>
 
         {/* Live Environmental Telemetry & Quiz Grid */}
-        <section className="py-12 px-container-padding bg-surface dark:bg-surface border-b border-outline-variant/30">
-          <div className="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-7">
-              <WeatherWidget />
+        <ScrollReveal direction="up" delay={100}>
+          <section className="scroll-snap-section py-12 px-container-padding bg-surface dark:bg-surface border-b border-outline-variant/30">
+            <div className="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-7">
+                <WeatherWidget />
+              </div>
+              <div className="lg:col-span-5">
+                <EcoZoneQuiz />
+              </div>
             </div>
-            <div className="lg:col-span-5">
-              <EcoZoneQuiz />
-            </div>
-          </div>
-        </section>
+          </section>
+        </ScrollReveal>
 
         {/* 2. Live Interactive Satellite GIS Map & Heatmap */}
-        <InteractiveMapSection />
+        <ScrollReveal direction="up" delay={50}>
+          <div className="scroll-snap-section">
+            <InteractiveMapSection />
+          </div>
+        </ScrollReveal>
 
         {/* Topographic Elevation & Green Dam Visualizer */}
-        <TopographyVisualizer />
+        <ScrollReveal direction="left" delay={100}>
+          <div className="scroll-snap-section">
+            <TopographyVisualizer />
+          </div>
+        </ScrollReveal>
 
         {/* 3. 16-Year Satellite Time-Lapse Comparison Slider (2010 vs 2026) */}
-        <SatelliteTimeLapse />
+        <ScrollReveal direction="up" delay={50}>
+          <div className="scroll-snap-section">
+            <SatelliteTimeLapse />
+          </div>
+        </ScrollReveal>
 
         {/* 4. AI Computer Vision Species Recognition & Health Diagnostic Scanner */}
-        <AISpeciesScanner />
+        <ScrollReveal direction="right" delay={100}>
+          <div className="scroll-snap-section">
+            <AISpeciesScanner />
+          </div>
+        </ScrollReveal>
 
         {/* 3D Herbarium Botanical Collection */}
-        <HerbariumShowcase />
+        <ScrollReveal direction="up" delay={150}>
+          <div className="scroll-snap-section">
+            <HerbariumShowcase />
+          </div>
+        </ScrollReveal>
 
         {/* 5. National Initiatives & Environmental Pillars */}
-        <InitiativesGrid />
+        <ScrollReveal direction="up" delay={50}>
+          <div className="scroll-snap-section">
+            <InitiativesGrid />
+          </div>
+        </ScrollReveal>
 
         {/* 6. 58 Algerian Provinces GIS Explorer & Wilaya Detail Drawer */}
-        <ProvincesSection />
+        <ScrollReveal direction="up" delay={100}>
+          <div className="scroll-snap-section">
+            <ProvincesSection />
+          </div>
+        </ScrollReveal>
 
         {/* 7. Citizen Science Tree Specimen Logging & Adoption Certificate CTA */}
-        <CitizenScienceCTA />
+        <ScrollReveal direction="up" delay={50}>
+          <div className="scroll-snap-section">
+            <CitizenScienceCTA />
+          </div>
+        </ScrollReveal>
 
         {/* 8. Reforestation Progress Roadmap Timeline */}
-        <TimelineSection />
+        <ScrollReveal direction="up" delay={100}>
+          <div className="scroll-snap-section">
+            <TimelineSection />
+          </div>
+        </ScrollReveal>
       </main>
 
       {/* Ambient Forest Soundscapes Widget */}
       <AmbientSoundscapeWidget />
+
+      {/* Floating Scroll Progress & Back-to-Top FAB */}
+      <ScrollProgressFAB />
 
       {/* Footer */}
       <Footer />

@@ -30,6 +30,8 @@ export const metadata: Metadata = {
 };
 
 import AntdClientProvider from "@/components/AntdClientProvider";
+import ToastProvider from "@/components/ToastProvider";
+import PageTransition from "@/components/PageTransition";
 
 export default function RootLayout({
   children,
@@ -50,7 +52,11 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-on-background min-h-screen font-body-md antialiased overflow-x-hidden transition-colors duration-200">
         <AntdClientProvider>
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            <ToastProvider>
+              <PageTransition>{children}</PageTransition>
+            </ToastProvider>
+          </LanguageProvider>
         </AntdClientProvider>
       </body>
     </html>

@@ -21,6 +21,7 @@ import {
   Sprout,
   Heart
 } from "lucide-react";
+import { Progress, message, Tag } from "antd";
 
 export default function CitizenPortalPage() {
   const [xp, setXp] = useState(2400);
@@ -33,6 +34,7 @@ export default function CitizenPortalPage() {
     if (!claimedReward) {
       setXp((prev) => prev + 150);
       setClaimedReward(true);
+      message.success("🎉 Daily XP Reward (+150 XP) successfully claimed!");
     }
   };
 
@@ -124,11 +126,13 @@ export default function CitizenPortalPage() {
                   </p>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-on-primary-fixed-variant/40 rounded-full h-3 mb-2 overflow-hidden">
-                    <div
-                      className="bg-primary-fixed h-3 rounded-full transition-all duration-700"
-                      style={{ width: `${Math.min((xp / 3000) * 100, 100)}%` }}
-                    ></div>
+                  <div className="mb-2">
+                    <Progress
+                      percent={Math.min(Math.round((xp / 3000) * 100), 100)}
+                      strokeColor={{ "0%": "#a3f69c", "100%": "#ffffff" }}
+                      size="small"
+                      showInfo={false}
+                    />
                   </div>
                   <div className="flex justify-between text-xs text-primary-fixed-dim font-mono">
                     <span>{xp} XP</span>

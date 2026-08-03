@@ -29,6 +29,7 @@ import {
   Download,
   BarChart3
 } from "lucide-react";
+import { Table, Tag, Badge, Switch, Progress } from "antd";
 import "leaflet/dist/leaflet.css";
 
 interface GISLayer {
@@ -481,39 +482,65 @@ export default function GISConsolePage() {
                   </div>
                 </div>
 
-                <div className="glass-card rounded-2xl overflow-hidden overflow-x-auto border border-outline-variant/40 shadow-xl">
-                  <table className="w-full text-left border-collapse text-xs">
-                    <thead>
-                      <tr className="bg-surface-container-high dark:bg-surface-container-highest text-on-surface border-b border-outline-variant/30 font-bold uppercase tracking-wider text-[11px]">
-                        <th className="py-3.5 px-4">Code</th>
-                        <th className="py-3.5 px-4">Wilaya</th>
-                        <th className="py-3.5 px-4">Eco-Region</th>
-                        <th className="py-3.5 px-4">Forest Cover %</th>
-                        <th className="py-3.5 px-4">Total Trees Logged</th>
-                        <th className="py-3.5 px-4">NDVI Score</th>
-                        <th className="py-3.5 px-4">Dominant Species</th>
-                        <th className="py-3.5 px-4">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-outline-variant/30 text-on-surface">
-                      {filteredForest.map((item) => (
-                        <tr key={item.code} className="hover:bg-primary/5 transition-colors">
-                          <td className="py-3 px-4 font-mono font-bold text-primary">{item.code}</td>
-                          <td className="py-3 px-4 font-bold">{item.wilaya}</td>
-                          <td className="py-3 px-4 text-on-surface-variant">{item.region}</td>
-                          <td className="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">{item.forestCover}</td>
-                          <td className="py-3 px-4 font-mono">{item.trees}</td>
-                          <td className="py-3 px-4 font-mono font-bold">{item.ndvi}</td>
-                          <td className="py-3 px-4 italic text-primary">{item.dominant}</td>
-                          <td className="py-3 px-4">
-                            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold border border-emerald-500/30">
-                              {item.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="glass-card rounded-2xl p-2 border border-outline-variant/40 shadow-xl overflow-x-auto">
+                  <Table
+                    dataSource={filteredForest.map((item) => ({ ...item, key: item.code }))}
+                    columns={[
+                      {
+                        title: "Code",
+                        dataIndex: "code",
+                        key: "code",
+                        render: (code: string) => <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">W{code}</span>,
+                        sorter: (a, b) => a.code.localeCompare(b.code),
+                      },
+                      {
+                        title: "Wilaya",
+                        dataIndex: "wilaya",
+                        key: "wilaya",
+                        render: (text: string) => <span className="font-bold">{text}</span>,
+                        sorter: (a, b) => a.wilaya.localeCompare(b.wilaya),
+                      },
+                      {
+                        title: "Eco-Region",
+                        dataIndex: "region",
+                        key: "region",
+                      },
+                      {
+                        title: "Forest Cover %",
+                        dataIndex: "forestCover",
+                        key: "forestCover",
+                        render: (val: string) => <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">{val}</span>,
+                        sorter: (a, b) => parseFloat(a.forestCover) - parseFloat(b.forestCover),
+                      },
+                      {
+                        title: "Logged Trees",
+                        dataIndex: "trees",
+                        key: "trees",
+                        render: (trees: string) => <span className="font-mono">{trees}</span>,
+                      },
+                      {
+                        title: "NDVI Score",
+                        dataIndex: "ndvi",
+                        key: "ndvi",
+                        render: (ndvi: string) => <Tag color="green" className="font-mono font-bold">{ndvi}</Tag>,
+                        sorter: (a, b) => parseFloat(a.ndvi) - parseFloat(b.ndvi),
+                      },
+                      {
+                        title: "Dominant Species",
+                        dataIndex: "dominant",
+                        key: "dominant",
+                        render: (sp: string) => <span className="italic text-emerald-600 dark:text-emerald-400 font-medium">{sp}</span>,
+                      },
+                      {
+                        title: "Status",
+                        dataIndex: "status",
+                        key: "status",
+                        render: (status: string) => <Badge status="success" text={<span className="text-xs font-semibold">{status}</span>} />,
+                      },
+                    ]}
+                    pagination={{ pageSize: 5 }}
+                    size="small"
+                  />
                 </div>
               </div>
             </div>

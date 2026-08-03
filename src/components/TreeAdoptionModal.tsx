@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Award, X, Check, Download, QrCode, MapPin, Trees, Sparkles, Printer } from "lucide-react";
+import { Award, X, Check, Download, QrCode, MapPin, Trees, Sparkles, Printer, ShieldCheck } from "lucide-react";
+import { Tag, Badge } from "antd";
 
 interface Props {
   isOpen: boolean;

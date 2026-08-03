@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   ],
 };
 
+import AntdClientProvider from "@/components/AntdClientProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,7 +49,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-background min-h-screen font-body-md antialiased overflow-x-hidden transition-colors duration-200">
-        <LanguageProvider>{children}</LanguageProvider>
+        <AntdClientProvider>
+          <LanguageProvider>{children}</LanguageProvider>
+        </AntdClientProvider>
       </body>
     </html>
   );

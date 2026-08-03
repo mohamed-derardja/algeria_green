@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Layers, Activity, ShieldAlert, Sparkles, MapPin, Eye, Compass, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
+import { Layers, Activity, ShieldAlert, Sparkles, MapPin, Eye, Compass, ZoomIn, ZoomOut, Maximize2, Flame } from "lucide-react";
+import { Progress, Tag, Segmented } from "antd";
 import "leaflet/dist/leaflet.css";
 
 interface MapHotspot {
@@ -246,7 +247,7 @@ export default function InteractiveMapSection() {
               onClick={() => handleLayerChange("satellite")}
               className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 cursor-pointer ${
                 activeLayer === "satellite"
-                  ? "bg-primary text-on-primary shadow-sm"
+                  ? "bg-primary text-on-primary shadow-sm font-bold"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
               }`}
             >
@@ -258,7 +259,7 @@ export default function InteractiveMapSection() {
               onClick={() => handleLayerChange("ndvi")}
               className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 cursor-pointer ${
                 activeLayer === "ndvi"
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm font-bold"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
               }`}
             >
@@ -270,12 +271,24 @@ export default function InteractiveMapSection() {
               onClick={() => handleLayerChange("greendam")}
               className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 cursor-pointer ${
                 activeLayer === "greendam"
-                  ? "bg-amber-600 text-white shadow-sm"
+                  ? "bg-amber-600 text-white shadow-sm font-bold"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
               Green Dam Belt
+            </button>
+
+            <button
+              onClick={() => handleLayerChange("fire")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 cursor-pointer ${
+                activeLayer === "fire"
+                  ? "bg-rose-600 text-white shadow-sm font-bold"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5" />
+              Thermal Risk Band
             </button>
           </div>
         </div>
@@ -357,29 +370,43 @@ export default function InteractiveMapSection() {
                   </p>
 
                   {/* Metrics Grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="grid grid-cols-2 gap-3 mb-4">
                     <div className="p-3 rounded-xl bg-surface-container dark:bg-surface-container-high">
-                      <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-0.5">
+                      <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-1">
                         NDVI Density
                       </span>
-                      <span className="font-mono font-bold text-lg text-primary">
+                      <span className="font-mono font-bold text-lg text-primary block mb-1">
                         {selectedHotspot.ndvi}
                       </span>
+                      <Progress
+                        percent={Math.round(selectedHotspot.ndvi * 100)}
+                        strokeColor={{ "0%": "#10b981", "100%": "#0d631b" }}
+                        size="small"
+                        showInfo={false}
+                      />
                     </div>
 
                     <div className="p-3 rounded-xl bg-surface-container dark:bg-surface-container-high">
-                      <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-0.5">
+                      <span className="text-[11px] text-on-surface-variant uppercase font-label-sm block mb-1">
                         Logged Trees
                       </span>
-                      <span className="font-mono font-bold text-lg text-secondary">
+                      <span className="font-mono font-bold text-lg text-secondary block mb-1">
                         {selectedHotspot.treesCount}
                       </span>
+                      <Progress
+                        percent={85}
+                        strokeColor="#2a6b2c"
+                        size="small"
+                        showInfo={false}
+                      />
                     </div>
                   </div>
 
                   <div className="p-3 rounded-xl bg-primary/5 border border-primary/20 text-xs text-primary font-medium flex items-center justify-between">
                     <span>Year-Over-Year Metric:</span>
-                    <span className="font-mono font-bold">{selectedHotspot.trend}</span>
+                    <Tag color="green" className="font-mono font-bold border-none m-0">
+                      {selectedHotspot.trend}
+                    </Tag>
                   </div>
                 </div>
 

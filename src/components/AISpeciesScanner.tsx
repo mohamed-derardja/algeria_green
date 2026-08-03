@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Bot, Upload, Sparkles, CheckCircle2, RefreshCw, Image as ImageIcon } from "lucide-react";
+import { Progress, Tag } from "antd";
 
 interface SpecimenSample {
   id: string;
@@ -210,12 +211,12 @@ export default function AISpeciesScanner() {
                 </div>
               ) : scanResult ? (
                 <div className="animate-fadeIn space-y-4">
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-center gap-4">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">
+                        <Tag color="emerald" className="font-mono text-xs font-bold border-emerald-500/30 m-0">
                           {scanResult.confidence}% {t("scanner_confidence")}
-                        </span>
+                        </Tag>
                         <span className="text-xs text-on-surface-variant font-arabic font-semibold">
                           {scanResult.nameAr}
                         </span>
@@ -225,9 +226,15 @@ export default function AISpeciesScanner() {
                       </h3>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary text-center">
-                      <span className="block font-mono font-bold text-lg">{scanResult.healthScore}%</span>
-                      <span className="text-[10px] uppercase font-label-sm">{t("scanner_vitality")}</span>
+                    <div className="flex flex-col items-center shrink-0">
+                      <Progress
+                        type="circle"
+                        percent={scanResult.healthScore}
+                        size={54}
+                        strokeColor={{ "0%": "#10b981", "100%": "#0d631b" }}
+                        format={(percent) => <span className="font-mono font-bold text-xs text-emerald-500">{percent}%</span>}
+                      />
+                      <span className="text-[10px] uppercase font-label-sm mt-1 text-on-surface-variant">{t("scanner_vitality")}</span>
                     </div>
                   </div>
 

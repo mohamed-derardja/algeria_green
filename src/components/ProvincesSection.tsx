@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import WilayaDetailModal from "./WilayaDetailModal";
-import { Search, Trees, Filter, MapPin, X, ExternalLink, ChevronRight, Activity } from "lucide-react";
+import WilayaCompareModal from "./WilayaCompareModal";
+import { Search, Trees, Filter, MapPin, X, ExternalLink, ChevronRight, Activity, ArrowLeftRight } from "lucide-react";
+import { Progress, Tag } from "antd";
 
 interface ProvinceData {
   code: string;
@@ -23,6 +25,7 @@ export default function ProvincesSection() {
   const [selectedRegion, setSelectedRegion] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedProvince, setSelectedProvince] = useState<ProvinceData | null>(null);
+  const [showCompareModal, setShowCompareModal] = useState(false);
 
   const provinces: ProvinceData[] = [
     {
@@ -199,9 +202,16 @@ export default function ProvincesSection() {
             </p>
           </div>
 
-          {/* Search Input */}
-          <div className="w-full md:w-80">
-            <div className="relative">
+          {/* Search & Compare Controls */}
+          <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => setShowCompareModal(true)}
+              className="px-4 py-2.5 rounded-xl bg-emerald-600/10 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-300 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap active:scale-95"
+            >
+              <ArrowLeftRight className="w-4 h-4" /> Compare Wilayas Side-by-Side
+            </button>
+
+            <div className="relative w-full sm:w-72">
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" />
               <input
                 type="text"
@@ -272,23 +282,20 @@ export default function ProvincesSection() {
                     <span className="text-on-surface-variant text-[11px]">Forest Coverage:</span>
                     <span className="font-mono font-bold text-secondary">{prov.forestCoverPct}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-secondary rounded-full transition-all duration-700"
-                      style={{ width: `${Math.min(prov.forestCoverPct * 2, 100)}%` }}
-                    ></div>
-                  </div>
+                  <Progress
+                    percent={Math.min(prov.forestCoverPct * 2.2, 100)}
+                    strokeColor="#2a6b2c"
+                    size="small"
+                    showInfo={false}
+                  />
                 </div>
 
                 {/* Species Pills */}
                 <div className="flex flex-wrap gap-1 mb-4">
                   {prov.dominantSpecies.slice(0, 2).map((sp) => (
-                    <span
-                      key={sp}
-                      className="text-[10px] bg-primary/5 text-primary border border-primary/20 px-2 py-0.5 rounded-md font-medium"
-                    >
+                    <Tag key={sp} color="green" className="text-[10px] border-emerald-500/20 font-medium m-0">
                       {sp}
-                    </span>
+                    </Tag>
                   ))}
                 </div>
 
@@ -310,6 +317,13 @@ export default function ProvincesSection() {
         <WilayaDetailModal
           province={selectedProvince}
           onClose={() => setSelectedProvince(null)}
+        />
+
+        {/* Side-by-Side Wilaya Comparison Modal */}
+        <WilayaCompareModal
+          isOpen={showCompareModal}
+          onClose={() => setShowCompareModal(false)}
+          provinces={provinces}
         />
       </div>
     </section>

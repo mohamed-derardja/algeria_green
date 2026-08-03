@@ -11,6 +11,7 @@ import ProvincesSection from "@/components/ProvincesSection";
 import CitizenScienceCTA from "@/components/CitizenScienceCTA";
 import TimelineSection from "@/components/TimelineSection";
 import Footer from "@/components/Footer";
+import AmbientSoundscapeWidget from "@/components/AmbientSoundscapeWidget";
 
 export default function Home() {
   return (
@@ -59,6 +60,9 @@ export default function Home() {
         {/* 8. Reforestation Progress Roadmap Timeline */}
         <TimelineSection />
       </main>
+
+      {/* Ambient Forest Soundscapes Widget */}
+      <AmbientSoundscapeWidget />
 
       {/* Footer */}
       <Footer />

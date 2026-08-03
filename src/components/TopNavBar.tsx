@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut } from "lucide-react";
+import { Search, Moon, Sun, Bell, HelpCircle, Menu, X, PlusCircle, Globe, ChevronDown, LogOut, Command } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import GreenAlgeriaLogo from "./GreenAlgeriaLogo";
+import CommandPaletteModal from "./CommandPaletteModal";
 
 export default function TopNavBar() {
   const pathname = usePathname();
@@ -16,6 +17,18 @@ export default function TopNavBar() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [showCommandPalette, setShowCommandPalette] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setShowCommandPalette((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -70,23 +83,17 @@ export default function TopNavBar() {
         {/* Center Search Input & Navigation Links */}
         <div className="hidden lg:flex flex-1 items-center justify-center gap-6 px-4">
           {/* Search Input */}
-          <div className="relative w-56">
+          <div className="relative w-64 cursor-pointer" onClick={() => setShowCommandPalette(true)}>
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 pointer-events-none" />
             <input
-              className="w-full bg-slate-50 dark:bg-zinc-900 rounded-full py-1.5 pl-9 pr-3 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all placeholder:text-slate-400 font-medium shadow-2xs"
-              placeholder={language === "AR" ? "ابحث عن ولاية..." : language === "FR" ? "Rechercher une Wilaya..." : "Search Wilaya (e.g. Batna)..."}
+              readOnly
+              className="w-full bg-slate-50 dark:bg-zinc-900 rounded-full py-1.5 pl-9 pr-12 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-zinc-700 outline-none transition-all placeholder:text-slate-400 font-medium cursor-pointer shadow-2xs"
+              placeholder={language === "AR" ? "ابحث عن ولاية..." : language === "FR" ? "Rechercher une Wilaya..." : "Search Wilaya (Ctrl+K)..."}
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-emerald-700 cursor-pointer"
-              >
-                ✕
-              </button>
-            )}
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono font-bold bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 px-1.5 py-0.5 rounded border border-slate-300 dark:border-zinc-700 flex items-center gap-0.5 pointer-events-none">
+              <Command className="w-2.5 h-2.5" /> K
+            </span>
           </div>
 
           {/* Navigation Tabs */}
@@ -379,6 +386,12 @@ export default function TopNavBar() {
           </div>
         </div>
       )}
+
+      {/* Global Command Palette Modal (Ctrl + K) */}
+      <CommandPaletteModal
+        isOpen={showCommandPalette}
+        onClose={() => setShowCommandPalette(false)}
+      />
     </>
   );
 }
